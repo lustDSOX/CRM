@@ -1,0 +1,53 @@
+﻿@page
+@model CRM.Pages.MainPageModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/main_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+    <title>Main</title>
+</head>
+<body>
+    <ul class="user_panel invisible">
+        <li><button>settings</button></li>
+        <li><button>logout</button></li>
+    </ul>
+    <header>
+        <a href="#"><img src="https://i.pinimg.com/564x/f5/38/e6/f538e62cef02ac6f733ef120dec71ed7.jpg" style="height:100%;"></a>
+        <button class="user_button">
+            <p id="user_name">namenamenamenamename</p>
+            <img id="user_img" src="https://avatars.mds.yandex.net/get-yapic/30955/h9ESpYexO4nrHvOZqGg2EYWLhqA-1/islands-retina-small">
+        </button>
+    </header>
+    <div class="main_block">
+        <ul>
+            <li><button>counterpartners</button></li>
+            <li><button>requests</button></li>
+            <li><button>employee</button></li>
+            <li><button>settings</button></li>
+        </ul>
+        <div class="changed_panel">
+            <ul id="ListSubj" style="overflow-y:scroll;width:20%;">
+                @foreach (var item in Model.allMailSubject)
+                {
+                    <li><button>
+                            @item
+                        </button></li>
+                    <hr/>
+                }
+            </ul>
+            <div style="width:100%;">
+                <h4></h4>
+                <div id="currentMail"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

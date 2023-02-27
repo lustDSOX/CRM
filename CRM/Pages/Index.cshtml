@@ -1,0 +1,31 @@
+﻿@page
+@model CRM.Pages.IndexModel
+@{
+    ViewData["Title"] = "Home page";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="/css/authorization_style.css">
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/authorization.js"></script>
+	<title>Autorization</title>
+</head>
+<body>
+	<img src="https://i.pinimg.com/564x/f5/38/e6/f538e62cef02ac6f733ef120dec71ed7.jpg">
+	<form method="post"> 
+		<h3>Login to your account</h3>
+		<hr>
+		<label>Email/login</label>
+		<input type="email" name="email">
+		<label>Password</label>
+		<input type="password" name="password" id="password_input">
+		<a href="#" class="password_control" ></a>
+		<button class="form_auth_button" type="submit" value="Send">Sign in</button>
+	</form>
+</body>
+</html>

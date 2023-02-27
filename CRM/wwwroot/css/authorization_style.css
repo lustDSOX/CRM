@@ -1,0 +1,87 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    display: block;
+    margin-top: 3%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 10%;
+}
+
+form {
+    width: 70vh;
+    height: 50vh;
+    margin: auto;
+    margin-top: 3%;
+    background: black;
+    border-radius: 0.3vw;
+}
+
+h3 {
+    color: white;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 1.5vw;
+    padding-top: 3%;
+    margin: 0;
+}
+
+hr {
+    width: 60%;
+    border: 0.1vw solid #0C0C0C;
+    border-radius: 0.1vw;
+    background: #0C0C0C;
+}
+
+label {
+    display: block;
+    color: white;
+    font-family: 'Montserrat',sans-serif;
+    font-size: 1.2vw;
+    width: 60%;
+    margin: auto;
+    margin-top: 5%;
+}
+
+input {
+    display: block;
+    width: calc(60% - 1vw);
+    margin: auto;
+    margin-top: 1%;
+    padding: 0.5vw;
+    font-size: 1vw;
+    border-radius: 0.3vw;
+    background: #CCCCCC;
+}
+
+a {
+    position: absolute;
+    display: inline-block;
+    width: 1.3vw;
+    height: 1.3vw;
+    background: url("../images/invisible.png") no-repeat;
+    background-size: cover;
+    left: 58.5vw;
+    top: 55vh;
+}
+
+    a.view {
+        background: url("../images/eye.png") 0 0 no-repeat;
+        background-size: cover;
+    }
+
+button {
+    display: block;
+    font-family: 'Montserrat',sans-serif;
+    font-weight: 500;
+    font-size: 1vw;
+    width: 60%;
+    margin: auto;
+    margin-top: 10%;
+    padding: 0.5vw;
+    border-radius: 0.3vw;
+}
