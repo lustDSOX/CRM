@@ -8,6 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/base.css">
     <link rel="stylesheet" type="text/css" href="/css/main_style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -28,26 +29,13 @@
     </header>
     <div class="main_block">
         <ul>
-            <li><button>counterpartners</button></li>
-            <li><button>requests</button></li>
-            <li><button>employee</button></li>
-            <li><button>settings</button></li>
+            <li><button>все заявки</button></li>
+            <li><button>мои заявки</button></li>
+            <li><button>приемники</button></li>
+            <li><button>заявители</button></li>
+            <li><button>работники</button></li>
         </ul>
-        <div class="changed_panel">
-            <ul id="ListSubj" style="overflow-y:scroll;width:20%;">
-                @foreach (var item in Model.allMailSubject)
-                {
-                    <li><button>
-                            @item
-                        </button></li>
-                    <hr/>
-                }
-            </ul>
-            <div style="width:100%;">
-                <h4></h4>
-                <div id="currentMail"></div>
-            </div>
-        </div>
+        <div class="changed_panel"></div>
     </div>
 </body>
 </html>

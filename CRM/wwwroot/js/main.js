@@ -1,28 +1,20 @@
-$(document).ready(function () {
-    const list = document.getElementById("ListSubj");
-    const items = list.getElementsByTagName("li");
-
-    for (let i = 0; i < items.length; i++) {//проходимся по все м элементам списка и на клик ставим слудующую функцию 
-        items[i].addEventListener("click", function () {
-            var index = Array.from(items).indexOf(this);//получаем индекс
-            console.log(index);
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'MainPage?handler=GetMailData&i=' + index);//get запрос на сервер [Страница?handler = Метод&параметры]
-            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            xhr.onload = function () {
-                if (xhr.status === 200) {//если все норм
-                    var response = JSON.parse(xhr.responseText); //получаем json с нашими объектами 
-                    console.log(response.subj);
-                    document.getElementById('currentMail').innerHTML = response.mail; //"вставляем" куда надо
-                    document.getElementsByTagName('h4')[0].innerHTML = response.subj;
-                }
-                else {
-                    console.log('Request failed.  Returned status of ' + xhr.status);
-                }
-            };
-            xhr.send();
+$(document).ready(function () {    
+    
+    $('.main_block li').each(function (index) {
+      if (index % 3 === 0) {
+        $(this).on('click', function () {
+          if($(".changed_panel").children().length != 0){
+            $(".changed_panel").empty();
+          }
+          const iframe = document.createElement('iframe');
+          iframe.src = 'AllRequests';
+          iframe.height = '100%';
+          iframe.width = '100%';
+          $(iframe).css("border", "none");
+          $(".changed_panel").append(iframe);
         });
-    }
+      }
+    });
 
 	$( ".user_button" ).click(function() {
 		$(".user_panel").toggleClass('invisible');

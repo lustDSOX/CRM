@@ -1,0 +1,39 @@
+::-webkit-scrollbar {
+    width: 0.4vw;
+}
+
+/* Трек поле скроллбара */
+::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 1vh;
+}
+
+/* Ползунок скроллбара */
+::-webkit-scrollbar-thumb {
+    background-color: #0460D9;
+    border: 0px solid black;
+    border-radius: 1vh;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100.1vh;
+    overflow: hidden;
+    color: white;
+}
+
+h2 {
+    color: white;
+    font-size: 20px;
+}
+
+hr{
+    width: 95%;
+}
+
+p{
+    margin: 0;
+    font-size: 1.5vh;
+}

@@ -1,0 +1,176 @@
+table{
+    margin-top: 3%;
+}
+
+td{
+    border-radius: 0.1vh;
+    height: 0.1vh;
+}
+ul{
+    margin: 0;
+    padding: 1%;
+    list-style-type: none;
+}
+
+button {
+    width: 100%;
+    background: transparent;
+    border: 0px solid transparent;
+    border-radius: 0.7vh;
+    color: white;
+    padding: 4% 6%;
+	font-size: 100%;
+    text-align: left;
+}
+
+button:hover {
+   	background: #0460D9 !important;
+}
+
+.panel{
+	display: flex;
+    width: 100%;
+    height: 97%;
+    border-radius: 0 2vh 0 0;
+    background: black;
+}
+
+#currentMail {
+    visibility: visible;
+    overflow-y: scroll;
+    height: 100%;
+    width: 68%;
+    margin-right: 2%;
+    background: white;
+    padding: 0;
+}
+
+#currentParameters{
+    width: 28%;
+    padding: 0;
+    position: relative;
+}
+
+#currentParameters li >*{
+    width: 100% ;
+    font-size: 2vh;
+}
+
+#currentParameters li{
+    margin-bottom: 5%;
+}
+
+textarea{
+    max-width: 95%;
+    min-width: 95%;
+    min-height: 10%;
+    max-height: 10%;
+    font-size: 1.5vh !important;
+    border-radius: 0.5vh;
+    padding: 2%;
+}
+
+
+#ListSubj{
+    overflow-y:scroll;
+    overflow-x: hidden;
+    margin-left: 2%;
+    width: 93%;
+    height: 90%;
+}
+
+#ListSubj li{
+    margin-bottom: 2%;
+}
+.search{
+    display: block;
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    background-color: #1b1c1b;
+    color: white;
+    border: 0;
+    border-radius: 60px;
+    padding: 10px 15px;
+    font-size: 16px;
+}
+.search::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 16px;
+}
+
+.selected {
+    background: #0460D9;
+}
+
+.select2 {
+    width: 100% !important;
+    color: black;
+}
+
+/* Изменение цвета элементов в выпадающем списке */
+.select2-results__option {
+  background-color: white;
+  color: black;
+}
+
+/* Изменение цвета выделенного элемента в выпадающем списке */
+.select2-results__option[aria-selected="true"] {
+  background: #1b1c1b !important; 
+}
+.select2-dropdown {
+    box-shadow: 0px 3px 10px #0460D9;
+}
+
+.option_btns{
+    position: absolute;
+    width: 100%;
+    bottom: 1%;
+}
+
+.option_btns button{
+    width: 100%;
+    background: #1b1c1b;
+    padding: 5%;
+    text-align: center;
+    margin-top: 3%;
+    border: 0.15vw solid #0460D9;
+}
+
+.commentsHistory{
+    display: flex;
+    flex-direction: column;
+    height: 60%;
+    background: white;
+    margin-bottom: 2%;
+    border-radius: 2%;
+    overflow-y: scroll;
+}
+
+.commentsHistory div{
+    font-size: 2vh;
+    width: 70%;
+    padding: 2%;
+    border-radius: 0.5vh;  
+    color: black;
+    border: 0.15vw solid #0460D9;
+}
+
+.commentsHistory div p{
+    border-radius: 0.5vh;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #0460D9;
+}
+
+
+.RequesterComm{
+    margin: 3%;
+    margin-left: 21%;
+
+}
+.UserComm{
+    margin: 3%;
+    margin-right: 20%;
+}
