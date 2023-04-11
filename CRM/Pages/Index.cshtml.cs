@@ -1,20 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CRM.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
+using Microsoft.EntityFrameworkCore;
+using static CRM.Models.CrmRazorContext;
+using CRM.Models.Db_classes;
 namespace CRM.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        CrmRazorContext db = new CrmRazorContext();
+        List<User> Users = new List<User>();
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel()
         {
-            _logger = logger;
         }
 
         public void OnGet()
         {
-
+            Users = db.Users.ToList();
         }
     }
 }
