@@ -1,6 +1,7 @@
 ﻿@page
 @model CRM.Pages.IndexModel
 @{
+
     ViewData["Title"] = "Home page";
     Layout = null;
 }
@@ -21,9 +22,9 @@
 		<h3>Login to your account</h3>
 		<hr>
 		<label>Email/login</label>
-		<input type="email" name="email">
+		<input type="text" name="_email"/>
 		<label>Password</label>
-		<input type="password" name="password" id="password_input">
+		<input type="password" name="_password" id="password_input"/>
 		<a href="#" class="password_control" ></a>
 		<button class="form_auth_button" type="submit" value="Send">Sign in</button>
 	</form>
