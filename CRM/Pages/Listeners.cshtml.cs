@@ -7,7 +7,7 @@ namespace CRM.Pages
 {
     public class ListenersModel : PageModel
     {
-        private static CrmRazorContext db = new CrmRazorContext();
+        private static CrmRazorContext db = Manager.db;
         static Receiver receiver = new Receiver();
         static bool is_new = false;
         public void OnGet()

@@ -6,7 +6,7 @@ namespace CRM.Pages
     public class MainPageModel : PageModel
     {
         static User current_user = null;
-        private static CrmRazorContext db = new CrmRazorContext();
+        private static CrmRazorContext db = Manager.db;
         private static List<User> Users = db.Users.ToList();
         public string username;
         public void OnGet(string user_id)

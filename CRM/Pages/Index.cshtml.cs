@@ -7,7 +7,7 @@ namespace CRM.Pages
     [IgnoreAntiforgeryToken]
     public class IndexModel : PageModel
     {
-        private static CrmRazorContext db = new CrmRazorContext();
+        private static CrmRazorContext db = Manager.db;
         private static List<User> Users = db.Users.ToList();
         public IndexModel() { }
 
