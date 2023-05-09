@@ -2,11 +2,6 @@
     width: 0.4vw;
 }
 
-/* Трек поле скроллбара */
-::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 1vh;
-}
 
 /* Ползунок скроллбара */
 ::-webkit-scrollbar-thumb {
@@ -37,3 +32,163 @@ p{
     margin: 0;
     font-size: 1.5vh;
 }
+ul{
+    margin: 0;
+    padding: 1%;
+    list-style-type: none;
+}
+table{
+    margin-top: 3%;
+}
+
+td{
+    border: 0.01px solid red;
+    border-radius: 0.2vh;
+    height: 0.1vh;
+    width: 20%;
+}
+
+.stage_1 td{
+    border-color: blue;
+}
+.stage_1 td:nth-child(1){
+    background: blue;
+}
+
+.stage_2 td{
+    border-color: green;
+}
+.stage_2 td:nth-child(-n+2){
+    background: green;
+}
+
+.stage_3 td{
+    border-color: yellow;
+}
+.stage_3 td:nth-child(-n+3){
+    background: yellow;
+}
+
+.stage_4 td{
+    border-color: orange;
+}
+.stage_4 td:nth-child(-n+4){
+    background: orange;
+}
+.stage_5 td{
+    border-color: red;
+    background: red;
+}
+
+#ListSubj{
+    overflow-y:scroll;
+    overflow-x: hidden;
+    margin-left: 2%;
+    width: 93%;
+    height: 90%;
+}
+
+#ListSubj li{
+    margin-bottom: 2%;
+}
+.search{
+    display: block;
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    background-color: #1b1c1b;
+    color: white;
+    border: 0;
+    border-radius: 60px;
+    padding: 10px 15px;
+    font-size: 16px;
+}
+.search::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 16px;
+}
+
+.selected {
+    background: #0460D9;
+}
+.panel{
+    display: flex;
+    width: 100%;
+    height: 97%;
+    border-radius: 0 2vh 0 0;
+    background: black;
+}
+
+.select2 {
+    width: 100% !important;
+    color: black;
+}
+
+/* Изменение цвета элементов в выпадающем списке */
+.select2-results__option {
+  background-color: white;
+  color: black;
+}
+
+/* Изменение цвета выделенного элемента в выпадающем списке */
+.select2-results__option[aria-selected="true"] {
+  background: #1b1c1b !important; 
+}
+.select2-dropdown {
+    box-shadow: 0px 3px 10px #0460D9;
+}
+
+.select2-selection__choice {
+  margin-bottom: 0 !important;
+}
+
+.select2-selection__choice__remove:hover{
+    background-color: transparent !important;
+}
+
+.option_btns {
+    position: absolute;
+    width: 100%;
+    bottom: 2%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+    .option_btns button{
+        width: 40%;
+        padding: 2%;
+        color: white;
+        font-size: 2vh;
+        background: #1b1c1b;
+        text-align: center;
+        margin-top: 3%;
+        border: 0.15vw solid #0460D9;
+        border-radius: 0.7vh;
+    }
+
+
+.item {
+    width:75%;
+    display:none;
+}
+.add {
+    display:block !important;
+    width: 30%;
+    padding: 0% !important;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 3vh;
+    text-align: center;
+    border: 0.3vh solid;
+    border-color: #0460D9 !important;
+    margin-bottom: 5%;
+}
+
+    .add:hover {
+        border-color: white !important;
+        transform: scale(1.1);
+        left: 35%;
+    }

@@ -1,0 +1,96 @@
+button {
+    width: 100%;
+    background: transparent;
+    border: 0px solid transparent;
+    border-radius: 0.7vh;
+    color: white;
+    padding: 4% 6%;
+    font-size: 100%;
+    text-align: left;
+}
+
+button:hover {
+    background: #0460D9 !important;
+}
+#ListSubj button{
+  display: flex;
+  align-items: center;
+  padding: 4%;
+}
+#ListSubj button div{
+  position: relative;
+  width: 5vh;
+  height: 5vh;
+}
+
+#ListSubj button span{
+  margin-left: 5%;
+}
+input{
+  width: 98%;
+  font-size: 2vh !important;
+    border-radius: 0.5vh;
+    padding: 1%;
+    border: none;
+}
+p{
+  font-size: 2vh;
+  margin-bottom: 1%;
+}
+#current ul{
+  padding: 0;
+    position: relative;
+    width: 80%;
+    height: 95%;
+    margin: 0 auto;
+}
+#current ul li{
+  margin-bottom: 5%;
+}
+.option_btns{
+  position: absolute;
+  width: 100%;
+  bottom: 3%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.option_btns button{
+  width: 30%;
+  padding: 1%;
+}
+
+.fixed_header{
+  width: 100%;
+}
+
+.fixed_header tbody{
+  display:block;
+  width: 60vw;
+  overflow: auto;
+  height: 30vh;
+}
+
+.fixed_header thead tr {
+  display: block;
+  border: 0.1vh solid #0460D9;
+  border-radius: 0.5vh;
+}
+
+.fixed_header th, .fixed_header td {
+  padding: 5px;
+  text-align: left;
+  width: 15vw;
+  border: none;
+}
+
+.fixed_header tbody tr{
+  display: block;
+  border-bottom: 0.1vh solid #0460D9;
+  border-left: 0.1vh solid transparent;
+  margin-bottom: 1%;
+}
+.fixed_header tbody tr:hover{
+  background: #0460D9;
+  border-radius: 0.5vh;
+}

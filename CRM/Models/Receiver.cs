@@ -1,25 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CRM.Models.Db_classes;
+namespace CRM.Models;
 
 public partial class Receiver
 {
     public int ReceiverId { get; set; }
 
-    public string Name { get; set; } = null!;
+    public string? Name { get; set; }
 
-    public int State { get; set; }
-
-    public string Server { get; set; } = null!;
+    public bool Active { get; set; }
 
     public string IncommingMessageFolder { get; set; } = null!;
-
-    public int? Port { get; set; }
 
     public string MailUsername { get; set; } = null!;
 
     public string UserPassword { get; set; } = null!;
 
-    public virtual State StateNavigation { get; set; } = null!;
+    public string? Comment { get; set; }
 }

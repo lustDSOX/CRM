@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CRM.Models.Db_classes;
+namespace CRM.Models;
 
 public partial class User
 {
@@ -11,11 +11,11 @@ public partial class User
 
     public string Password { get; set; } = null!;
 
-    public string? Email { get; set; }
-
-    public string? PhoneNumber { get; set; }
-
     public int Role { get; set; }
+
+    public string? AvatarUrl { get; set; }
+
+    public string Login { get; set; } = null!;
 
     public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 

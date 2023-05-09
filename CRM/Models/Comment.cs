@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CRM.Models.Db_classes;
+namespace CRM.Models;
 
 public partial class Comment
 {

@@ -63,14 +63,14 @@ a {
     display: inline-block;
     width: 1.3vw;
     height: 1.3vw;
-    background: url("../images/invisible.png") no-repeat;
+    background: url("../images/invisible.svg") no-repeat;
     background-size: cover;
     left: 58.5vw;
     top: 55vh;
 }
 
     a.view {
-        background: url("../images/eye.png") 0 0 no-repeat;
+        background: url("../images/eye.svg") 0 0 no-repeat;
         background-size: cover;
     }
 

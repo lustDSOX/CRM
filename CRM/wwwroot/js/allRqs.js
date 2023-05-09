@@ -1,6 +1,4 @@
 $(document).ready(function () {  
-	$('select').select2();
-
 	const list = document.getElementById("ListSubj");
     const items = list.getElementsByTagName("li");
 
@@ -25,24 +23,16 @@ $(document).ready(function () {
             xhr.send();
         });
     }
-    $('.search').on('keyup', function() {
-    	const searchText = $(this).val().toLowerCase();
-    	$('#ListSubj li').each(function() {
-      	const itemText = $(this).text().toLowerCase();
-      	if (itemText.indexOf(searchText) !== -1) {
-        	$(this).show();
-      	} 
-      	else {
-        	$(this).hide();
-      	}
-    });
-  });
 
-   $("#ListSubj li button").click(function() {
-      // удаляем класс "selected" у всех элементов списка
-      $("#ListSubj li button").removeClass("selected");
-      // добавляем класс "selected" к выбранному элементу списка
-      $(this).addClass("selected");
+   $( ".history_button" ).click(function() {
+        $(".history_block").toggleClass('invisible');
+    });
+
+    $(document).mouseup(function (e) {
+    var container = $(".history_block");
+    if (container.has(e.target).length === 0 && container.hasClass("invisible") == false){
+        $(".history_block").toggleClass('invisible');
+    }
     });
    
 });

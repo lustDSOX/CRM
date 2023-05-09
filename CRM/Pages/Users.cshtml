@@ -1,0 +1,86 @@
+﻿@page
+@model CRM.Pages.UsersModel
+@{
+    Layout = null;
+}
+<!Doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/base.css">
+    <link rel="stylesheet" type="text/css" href="/css/users_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/users.js"></script>
+    <script type="text/javascript" src="/js/base.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+</head>
+<body>
+    <div class="panel">
+        <div style="width:25%;">
+            <input type="search" class="search" placeholder="поиск">
+            <ul id="ListSubj">
+                <button class="add">+</button>
+                <li>
+                    <button>
+                        <div>
+                            <img/>
+                            <img/>
+                        </div>
+                        <span>uraxara.sox@yandex.ru</span>
+                    </button>
+                    <hr />
+                </li>
+            </ul>
+        </div>
+        <div class="item" style="width:75%;">
+            <div id="current" style="height:93%;margin-top: 5%;">
+                <form method="post">
+                    <ul>
+                        <li>
+                            <div class="image_container">
+                                <label for="file-input">
+                                    <img>
+                                </label>
+                                <input id="file-input" type="file" style="display: none;" name="avatar">
+                                <div>
+                                    <div class="user_status" style="display:none">
+                                        <span></span>
+                                        <p>в сети</p>
+                                    </div>
+                                    <p>Имя</p>
+                                    <input type="text" id="name" name="name" required maxlength="50"/>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <p>Логин</p>
+                            <input type="text" id="login" name="login" required maxlength="50"/>
+                        </li>
+                        <li>
+                            <p>Пароль</p>
+                            <div class="password_div">
+                                <input type="text" id="password" name="password" required maxlength="50"/>
+                                <img src="images/eye.svg">
+                            </div>
+                        </li>
+                        <li>
+                            <p>Роль</p>
+                            <select id="selectRole">
+                                <option>Администратор</option>
+                                <option>Инженер</option>
+                            </select>
+                        </li>
+                        <div class="option_btns">
+                            <button>Удалить</button>
+                            <button type="submit">Сохранить</button>
+                        </div>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

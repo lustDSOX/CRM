@@ -1,20 +1,40 @@
 $(document).ready(function () {    
     
-    $('.main_block li').each(function (index) {
-      if (index % 3 === 0) {
-        $(this).on('click', function () {
-          if($(".changed_panel").children().length != 0){
+  var elements = $('.main_block li');
+  elements.on('click', function() {
+    var index = elements.index(this);
+    GetReq(index);
+  });
+
+
+  function GetReq(i){
+    if($(".changed_panel").children().length != 0){
             $(".changed_panel").empty();
           }
-          const iframe = document.createElement('iframe');
-          iframe.src = 'AllRequests';
-          iframe.height = '100%';
-          iframe.width = '100%';
-          $(iframe).css("border", "none");
-          $(".changed_panel").append(iframe);
-        });
-      }
-    });
+    const iframe = document.createElement('iframe');
+    console.log(i);
+    switch(i){
+      case 0:
+        iframe.src = 'AllRequests';
+        break;
+      case 1:
+        iframe.src = 'AllRequests';    
+        break;
+      case 2:
+        iframe.src = 'Listeners';
+        break;
+      case 3:
+        iframe.src = 'Requesters';
+        break;
+      case 4:
+        iframe.src = 'Users';
+        break;
+    }
+    iframe.height = '100%';
+    iframe.width = '100%';
+    $(iframe).css("border", "none");
+    $(".changed_panel").append(iframe);
+  }
 
 	$( ".user_button" ).click(function() {
 		$(".user_panel").toggleClass('invisible');

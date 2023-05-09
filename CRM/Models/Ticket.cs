@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CRM.Models.Db_classes;
+namespace CRM.Models;
 
 public partial class Ticket
 {
@@ -15,7 +15,7 @@ public partial class Ticket
 
     public DateTime LastChanged { get; set; }
 
-    public int State { get; set; }
+    public bool State { get; set; }
 
     public int Requester { get; set; }
 
@@ -23,7 +23,9 @@ public partial class Ticket
 
     public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
-    public virtual User RequesterNavigation { get; set; } = null!;
+    public virtual User Requester1 { get; set; } = null!;
+
+    public virtual Requester RequesterNavigation { get; set; } = null!;
 
     public virtual State StateNavigation { get; set; } = null!;
 

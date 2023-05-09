@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="/css/allRqs_style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/base.js"></script>
     <script type="text/javascript" src="/js/allRqs.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -20,32 +21,21 @@
     <div class="panel">
         <div style="width:25%;">
             <input type="text" class="search" placeholder="поиск">
-            @*тут список всех заявок*@
             <ul id="ListSubj">
-                <li>
-                    <button>
-                        item1
-                        <table width="100%">
-                            <tr>
-                                <td width="20%" style="background: red;"></td>
-                                <td width="20%" style="background: red;"></td>
-                                <td width="20%" style="background: red;"></td>
-                                <td width="20%" style="background: red;"></td>
-                                <td width="20%" style="background: red;"></td>
-                            </tr>
-                        </table>
-                        <p>в ожидании</p>
-                    </button>
-                </li>
             </ul>
         </div>
         <div style="width:75%;">
             <div id="currentRequest" style="height:100%">
-               @* заголовок заявки*@
-                <h4>Электронный чек по заказу 0119844088-0007</h4>
+                <h4></h4>
                 <div style="display:flex;flex-direction: row; height: 95.5%; margin-top: 2%;">
                     <div id="currentMail"></div>
                     <ul id="currentParameters">
+                        <button class="history_button"></button>
+                        <div class="history_block invisible">
+                            <div class="history">
+                            </div>
+                            <div class="pointer"></div>
+                        </div>
                         <li>
                             <p>клиент</p>
                             <p>none</p>
@@ -61,25 +51,18 @@
                             </select>
                         </li>
                         <li>
-                            <p>ответственный</p>
-                            <select id="selectRespons" multiple="multiple"></select>
+                            <p>ответственные</p>
+                            <select id="selectRespons" multiple="multiple">
+                                <option>новая</option>
+                                <option>назначена</option>
+                                <option>запланирована</option>
+                                <option>в ожидании</option>
+                                <option>закрыта</option>
+                            </select>
                         </li>
-                        <li style="height:70%">
+                        <li style="height:65%">
                             <p>комментарии</p>
-                           @* история коментариев, мб дату еще добавить *@
                             <div class="commentsHistory">
-                                <div class="RequesterComm">
-                                    <p>Requester</p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco
-                                </div>
-                                <div class="UserComm">
-                                    <p>User</p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco
-                                </div>
                             </div>
                             <textarea id="commentRequest"></textarea>
                         </li>
@@ -93,3 +76,4 @@
         </div>
     </div>
 </body>
+</html>

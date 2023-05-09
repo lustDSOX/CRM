@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using CRM.Models.Db_classes;
 using Microsoft.EntityFrameworkCore;
 
 namespace CRM.Models;
@@ -22,6 +21,8 @@ public partial class CrmRazorContext : DbContext
 
     public virtual DbSet<Receiver> Receivers { get; set; }
 
+    public virtual DbSet<Requester> Requesters { get; set; }
+
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<State> States { get; set; }
@@ -34,7 +35,7 @@ public partial class CrmRazorContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=ngknn.ru;Database=CRM_razor;User Id=33П;Password=12357; TrustServerCertificate=Yes");
+        => optionsBuilder.UseSqlServer("Server=ngknn.ru;Database=CRM_razor;User Id=33П;Password=12357;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -78,6 +79,10 @@ public partial class CrmRazorContext : DbContext
         modelBuilder.Entity<Receiver>(entity =>
         {
             entity.Property(e => e.ReceiverId).HasColumnName("receiver_id");
+            entity.Property(e => e.Active).HasColumnName("active");
+            entity.Property(e => e.Comment)
+                .IsUnicode(false)
+                .HasColumnName("comment");
             entity.Property(e => e.IncommingMessageFolder)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -90,21 +95,19 @@ public partial class CrmRazorContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("name");
-            entity.Property(e => e.Port).HasColumnName("port");
-            entity.Property(e => e.Server)
-                .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("server");
-            entity.Property(e => e.State).HasColumnName("state");
             entity.Property(e => e.UserPassword)
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("user_password");
+        });
 
-            entity.HasOne(d => d.StateNavigation).WithMany(p => p.Receivers)
-                .HasForeignKey(d => d.State)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Receivers_States");
+        modelBuilder.Entity<Requester>(entity =>
+        {
+            entity.HasKey(e => e.ReqId);
+
+            entity.Property(e => e.ReqId).HasColumnName("req_id");
+            entity.Property(e => e.Email).HasColumnName("email");
+            entity.Property(e => e.PhoneNumber).HasColumnName("phone_number");
         });
 
         modelBuilder.Entity<Role>(entity =>
@@ -146,6 +149,11 @@ public partial class CrmRazorContext : DbContext
             entity.HasOne(d => d.RequesterNavigation).WithMany(p => p.Tickets)
                 .HasForeignKey(d => d.Requester)
                 .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Tickets_Requesters");
+
+            entity.HasOne(d => d.Requester1).WithMany(p => p.Tickets)
+                .HasForeignKey(d => d.Requester)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Tickets_Users");
 
             entity.HasOne(d => d.StateNavigation).WithMany(p => p.Tickets)
@@ -157,10 +165,12 @@ public partial class CrmRazorContext : DbContext
         modelBuilder.Entity<User>(entity =>
         {
             entity.Property(e => e.UserId).HasColumnName("user_id");
-            entity.Property(e => e.Email)
-                .HasMaxLength(50)
+            entity.Property(e => e.AvatarUrl)
                 .IsUnicode(false)
-                .HasColumnName("email");
+                .HasColumnName("avatar_url");
+            entity.Property(e => e.Login)
+                .IsUnicode(false)
+                .HasColumnName("login");
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -169,10 +179,6 @@ public partial class CrmRazorContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("password");
-            entity.Property(e => e.PhoneNumber)
-                .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("phone_number");
             entity.Property(e => e.Role).HasColumnName("role");
 
             entity.HasOne(d => d.RoleNavigation).WithMany(p => p.Users)
