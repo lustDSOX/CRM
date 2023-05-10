@@ -1,4 +1,5 @@
 ﻿@page
+@using CRM.Models;
 @model CRM.Pages.AllRequestsModel
 @{
     Layout = null;
@@ -22,6 +23,31 @@
         <div style="width:25%;">
             <input type="text" class="search" placeholder="поиск">
             <ul id="ListSubj">
+                @foreach(Ticket ticket in Model.tickets)
+                {
+                    <li>
+                        <button>
+                            @ticket.TicketTitle
+                            @foreach(State state in Model.states)
+                            {
+                                if(@state.StateId == @ticket.State)
+                                {
+                                    <table width="100%" class="stage_@state.StateId">
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                    <p>@state.Name</p>
+                                }
+                            }
+                        </button>
+                        <hr />
+                    </li>
+                }
             </ul>
         </div>
         <div style="width:75%;">
@@ -37,27 +63,25 @@
                             <div class="pointer"></div>
                         </div>
                         <li>
-                            <p>клиент</p>
-                            <p>none</p>
+                            <p>От:</p>
+                            <p></p>
                         </li>
                         <li>
                             <p>стадия</p>
                             <select id="selectStage">
-                                <option>новая</option>
-                                <option>назначена</option>
-                                <option>запланирована</option>
-                                <option>в ожидании</option>
-                                <option>закрыта</option>
+                                @foreach (State state in Model.states)
+                                {
+                                    <option>@state.Name</option>
+                                }
                             </select>
                         </li>
                         <li>
                             <p>ответственные</p>
                             <select id="selectRespons" multiple="multiple">
-                                <option>новая</option>
-                                <option>назначена</option>
-                                <option>запланирована</option>
-                                <option>в ожидании</option>
-                                <option>закрыта</option>
+                                @foreach (User user in Model.users)
+                                {
+                                    <option value="@user.UserId">@user.Name</option>
+                                }
                             </select>
                         </li>
                         <li style="height:65%">
@@ -68,7 +92,7 @@
                         </li>
                         <div class="option_btns">
                             <button>Добавить комментарий</button>
-                            <button>Сохранить</button>
+                            <button type="submit">Сохранить</button>
                         </div>
                     </ul>
                 </div>

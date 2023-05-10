@@ -69,6 +69,8 @@
                         li.append(button);
                         list.append(li);
                     }
+                    var hr = $("<hr/>");
+                    li.append(hr);
                     if (item.name == null) {
                         span.text(item.mailUsername);
                     }
@@ -99,7 +101,7 @@
         var token = $("#token").val();
         $.ajax({
             type: "GET",
-            url: "Listeners?handler=PutData&name=" + name + "&state=" + state + "&server=" + server + "&folder=" + folder + "&comment=" + comment + "&token=" + token,
+            url: "Listeners?handler=PutData&name=" + name + "&state=" + state + "&server=" + server + "&folder=" + folder + "&comment=" + comment + "&password=" + token,
             success: function (response) {
                 GetData();
                 $(".item").hide();

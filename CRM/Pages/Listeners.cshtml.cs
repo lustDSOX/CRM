@@ -16,20 +16,24 @@ namespace CRM.Pages
 
         public IActionResult OnGetGetData()
         {
-            var data = db.Receivers.ToList();
+            List<Receiver> data;
+            lock (db)
+            {
+                data = db.Receivers.ToList();
+            }
             return new JsonResult(data);
         }
-        public IActionResult OnGetPutData(string name, bool state,string server,string folder,string comment,string token)
+        public IActionResult OnGetPutData(string name, bool state,string server,string folder,string comment,string password)
         {
             receiver.Name = name;
             receiver.Active = state;
-            receiver.MailUsername= server;
+            receiver.MailUsername = server;
             receiver.IncommingMessageFolder = folder;
             receiver.Comment = comment;
-            receiver.UserPassword = token;
-            if(is_new)
-                db.Receivers.Add(receiver);
-            db.SaveChanges();
+            receiver.UserPassword = password;
+            //if(is_new)
+            //    db.Receivers.Add(receiver);
+            //db.SaveChanges();
             return new OkResult();
         }
 

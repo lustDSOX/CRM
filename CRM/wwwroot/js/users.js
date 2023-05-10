@@ -72,12 +72,14 @@ $(document).ready(function () {
         var password = $("#password").val();
         var role = $('#selectRole').val();
         var avatar = $('input[type=file]')[0].files[0];
+        var working = $('#working').prop('checked');
         var formData = new FormData();
         formData.append('name', name);
         formData.append('login', login);
         formData.append('password', password);
         formData.append('role', role);
         formData.append('avatar', avatar);
+        formData.append('working', working);
         $.ajax({
             type: "POST",
             url: "Users?handler=PutData",
@@ -135,6 +137,7 @@ $(document).ready(function () {
                         var avatar = $("<img>")
                         var div = $("<div></div>");
                         
+                        
                         div.attr("id", item.UserId);
                         div.append(avatar);
                         div.append(role_img);
@@ -143,6 +146,8 @@ $(document).ready(function () {
                         li.append(button);
                         list.append(li);
                     }
+                    var hr = $("<hr/>");
+                    li.append(hr);
                     avatar.attr("src", item.AvatarUrl);
                     span.text(item.Name);
                     if (item.Role == 1) {
@@ -151,6 +156,9 @@ $(document).ready(function () {
                     else {
                         role_img.attr("src", "images/user.svg");
                     }
+                    //if (item.Working) {
+                    //    li.css('opacity', '0.5');
+                    //}
                 });
             },
             error: function (xhr, status, error) {

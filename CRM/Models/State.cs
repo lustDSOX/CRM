@@ -5,7 +5,7 @@ namespace CRM.Models;
 
 public partial class State
 {
-    public bool StateId { get; set; }
+    public int StateId { get; set; }
 
     public string Name { get; set; } = null!;
 

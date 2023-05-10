@@ -139,9 +139,7 @@ public partial class CrmRazorContext : DbContext
                 .HasColumnName("open_date");
             entity.Property(e => e.Requester).HasColumnName("requester");
             entity.Property(e => e.State).HasColumnName("state");
-            entity.Property(e => e.TicketDesciption)
-                .IsUnicode(false)
-                .HasColumnName("ticket_desciption");
+            entity.Property(e => e.TicketDesciption).HasColumnName("ticket_desciption");
             entity.Property(e => e.TicketTitle)
                 .IsUnicode(false)
                 .HasColumnName("ticket_title");
@@ -150,11 +148,6 @@ public partial class CrmRazorContext : DbContext
                 .HasForeignKey(d => d.Requester)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Tickets_Requesters");
-
-            entity.HasOne(d => d.Requester1).WithMany(p => p.Tickets)
-                .HasForeignKey(d => d.Requester)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Tickets_Users");
 
             entity.HasOne(d => d.StateNavigation).WithMany(p => p.Tickets)
                 .HasForeignKey(d => d.State)

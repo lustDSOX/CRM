@@ -15,7 +15,7 @@ $(document).ready(function () {
     console.log(i);
     switch(i){
       case 0:
-        iframe.src = 'AllRequests';
+        iframe.src = 'AllRequests?id=-1';
         break;
       case 1:
         iframe.src = 'AllRequests';    

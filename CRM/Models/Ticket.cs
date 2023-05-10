@@ -9,21 +9,19 @@ public partial class Ticket
 
     public string TicketTitle { get; set; } = null!;
 
-    public string TicketDesciption { get; set; } = null!;
+    public byte[] TicketDesciption { get; set; } = null!;
 
     public DateTime OpenDate { get; set; }
 
     public DateTime LastChanged { get; set; }
 
-    public bool State { get; set; }
+    public int State { get; set; }
 
     public int Requester { get; set; }
 
     public virtual ICollection<Attachment> Attachments { get; set; } = new List<Attachment>();
 
     public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
-
-    public virtual User Requester1 { get; set; } = null!;
 
     public virtual Requester RequesterNavigation { get; set; } = null!;
 

@@ -9,7 +9,7 @@ button {
     text-align: left;
 }
 
-button:not(.history_button):hover {
+button:not(.history_button,.select2-selection__choice__remove):hover {
     background: #0460D9 !important;
 }
 #currentMail {
@@ -48,12 +48,19 @@ textarea{
 }
 
 .option_btns{
+    display:block;
     position: absolute;
     width: 100%;
     bottom: 1%;
 }
+    .option_btns button {
+        width: 100%;
+        padding: 5%;
+        text-align: center;
+        margin-top: 3%;
+    }
 
-.commentsHistory{
+.commentsHistory {
     display: flex;
     flex-direction: column;
     height: 60%;

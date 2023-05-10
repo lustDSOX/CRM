@@ -1,6 +1,7 @@
 using CRM.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -10,6 +11,7 @@ namespace CRM.Pages
     {
         private static CrmRazorContext db = Manager.db;
         static User user = new User();
+        public List<Role> roles = db.Roles.ToList();
         static bool is_new = false;
 
         public void OnGet()
@@ -27,7 +29,7 @@ namespace CRM.Pages
         }
 
 
-        public IActionResult OnPostPutData(string name,string login,string password, string role,IFormFile avatar)
+        public IActionResult OnPostPutData(string name,string login,string password, string role,IFormFile avatar,bool working)
         {
             lock (user)
             {
@@ -72,6 +74,8 @@ namespace CRM.Pages
         {
             lock (user)
             {
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", user.AvatarUrl);
+                System.IO.File.Delete(path);
                 db.Users.Remove(user);
                 db.SaveChanges();
             }
