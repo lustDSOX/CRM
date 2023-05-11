@@ -9,6 +9,10 @@ namespace CRM.Pages
         private static CrmRazorContext db = Manager.db;
         private static List<User> Users = db.Users.ToList();
         public string username;
+        public MainPageModel()
+        {
+            Manager.GetTickets1Min();
+        }
         public void OnGet(string user_id)
         {
             //foreach (var user in Users)
