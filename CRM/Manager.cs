@@ -64,8 +64,8 @@ namespace CRM
                     Ticket ticket = new Ticket();
                     ticket.TicketTitle = item.NormalizedSubject; //Заголовок письма
 
-                    //string tempHtml = client.GetFolder(receiver.IncommingMessageFolder.ToString());
                     byte[] tempHtml = Encoding.UTF8.GetBytes(inbox.GetMessage(item.UniqueId).HtmlBody.ToCharArray());
+
                     using (var output = new MemoryStream())
                     {
                         using (var gzip = new GZipStream(output, CompressionMode.Compress))
@@ -77,9 +77,12 @@ namespace CRM
                     }
 
                     ticket.OpenDate = item.Date.UtcDateTime; //Дата открытия заявки
+
                     ticket.LastChanged = item.Date.UtcDateTime; //Дата последнего изменения, при создании заявки совпадает
+
                     ticket.State = 1; //Статус. 1 - Новая
-                    string temp = item.Envelope.From.ToString();
+
+                    string temp = item.Envelope.From.ToString(); //Обработка почты инициатора запроса
                     temp = temp.Substring(temp.IndexOf('<') + 1);
                     temp = temp.Trim('>');
                     Requester tempReq = new Requester { Email = temp };
@@ -92,8 +95,7 @@ namespace CRM
                         ticket.RequesterNavigation = tempReq; //Создание и запись инициатора запроса (от кого письмо)
                     }
 
-                    inbox.AddFlags(item.UniqueId, MessageFlags.Deleted, true);
-                    //inbox.MoveTo(item.UniqueId, client.GetFolder("CHECKED"));
+                    inbox.AddFlags(item.UniqueId, MessageFlags.Deleted, true); //Удаление письма
                     db.Tickets.Add(ticket);
                 }
                 inbox.Close();
