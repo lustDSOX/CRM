@@ -13,6 +13,8 @@
     <link rel="stylesheet" type="text/css" href="/css/allRqs_style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
     <script type="text/javascript" src="/js/base.js"></script>
     <script type="text/javascript" src="/js/allRqs.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -25,7 +27,7 @@
             <ul id="ListSubj">
                 @foreach(Ticket ticket in Model.tickets)
                 {
-                    <li>
+                    <li onclick="SetCurrentData(this)" id="@ticket.TicketId">
                         <button>
                             @ticket.TicketTitle
                             @foreach(State state in Model.states)
@@ -52,9 +54,24 @@
         </div>
         <div style="width:75%;">
             <div id="currentRequest" style="height:100%">
-                <h4></h4>
-                <div style="display:flex;flex-direction: row; height: 95.5%; margin-top: 2%;">
-                    <div id="currentMail"></div>
+                <div style="display:flex;flex-direction: row; height: 98%; margin-top: 2%;">
+                    <div id="currentMail">
+                        <h4></h4>
+                        <p id="open_date">Дата открытия: <b></b></p>
+                        <p id="last_changed">Последнее изменение: <b></b></p>
+                        <hr/>
+                        <div id="desciption"></div>
+                        <div class="attachments">
+                            <p><b>Прикрепленные файлы</b></p>
+                            <hr />
+                            <div>
+                                <a download="name" href="/images/avatars/2.gif">
+                                    <p id="type">JS</p>
+                                    <p id="file_name">base</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                     <ul id="currentParameters">
                         <button class="history_button"></button>
                         <div class="history_block invisible">
@@ -64,7 +81,7 @@
                         </div>
                         <li>
                             <p>От:</p>
-                            <p></p>
+                            <p id="requester"></p>
                         </li>
                         <li>
                             <p>стадия</p>
@@ -87,6 +104,18 @@
                         <li style="height:65%">
                             <p>комментарии</p>
                             <div class="commentsHistory">
+                                <div class="RequesterComm">
+                                    <p>Requester</p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                    quis nostrud exercitation ullamco
+                                </div>
+                                <div class="UserComm">
+                                    <p>User</p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                    quis nostrud exercitation ullamco
+                                </div>
                             </div>
                             <textarea id="commentRequest"></textarea>
                         </li>

@@ -1,30 +1,34 @@
-$(document).ready(function () {  
-	const list = document.getElementById("ListSubj");
-    const items = list.getElementsByTagName("li");
+function SetCurrentData(elem) {
+    var id = $(elem).attr("id");
+    $.ajax({
+        type: "GET",
+        url: "AllRequests?handler=SetData&id=" + id,
+        dataType: 'json',
+        success: function (response) {
+            var json = response;
+            $('#currentRequest h4').text(json.title);
+            $("#desciption").html(json.desciption);
+            $("#requester").text(json.requester);
+            $('#selectStage').val(json.state).trigger('change.select2');
+            $('#selectRespons').val(json.users).trigger('change.select2');
+            var date = moment(json.last_changed);
+            var formattedDate = date.format("DD MMMM YYYY HH:mm");
+            $("#last_changed b").text(formattedDate);
+            date = moment(json.open_date);
+            formattedDate = date.format("DD MMMM YYYY HH:mm");
+            $("#open_date b").text(formattedDate);
+            $("#currentRequest").show();
+        },
+        error: function (xhr, status, error) {
+            console.log('Request failed.  Returned status of ' + xhr.status);
+        }
+    });
+}
 
-    for (let i = 0; i < items.length; i++) {
-        items[i].addEventListener("click", function () {
-            var index = Array.from(items).indexOf(this);
-            console.log(index);
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'MainPage?handler=GetMailData&i=' + index);
-            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    var response = JSON.parse(xhr.responseText); 
-                    console.log(response.subj);
-                    document.getElementById('currentMail').innerHTML = response.mail; 
-                    document.getElementsByTagName('h4')[0].innerHTML = response.subj;
-                }
-                else {
-                    console.log('Request failed.  Returned status of ' + xhr.status);
-                }
-            };
-            xhr.send();
-        });
-    }
-
-   $( ".history_button" ).click(function() {
+$(document).ready(function () {
+    
+    moment.locale('ru');
+    $( ".history_button" ).click(function() {
         $(".history_block").toggleClass('invisible');
     });
 
@@ -34,5 +38,6 @@ $(document).ready(function () {
         $(".history_block").toggleClass('invisible');
     }
     });
+
    
 });

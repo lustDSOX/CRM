@@ -8,20 +8,38 @@ button {
     font-size: 100%;
     text-align: left;
 }
+#currentRequest{
+    display:none;
+}
+h4{
+    font-size:3vh;
+    margin:0 0 2vh 0;
+}
+hr{
+    width:100%;
 
+}
+#last_changed{
+    margin-bottom:2%;
+}
+#last_changed,#open_date{
+    font-size:2vh !important;
+}
 button:not(.history_button,.select2-selection__choice__remove):hover {
     background: #0460D9 !important;
 }
 #currentMail {
     visibility: visible;
-    overflow-y: scroll;
     height: 100%;
     width: 68%;
     margin-right: 2%;
-    background: white;
     padding: 0;
+    position:relative;
 }
-
+#desciption {
+    overflow-y: scroll;
+    margin:0 1vh 0 1vh;
+}
 #currentParameters{
     width: 28%;
     padding: 0;
@@ -157,4 +175,48 @@ textarea{
 }
 .invisible {
     visibility: hidden;
+}
+
+.attachments {
+    position: absolute;
+    width: 90%;
+    bottom: 1vh;
+    left: 0;
+    right: 0;
+    height: 20vh;
+    padding: 1%;
+}
+.attachments div{
+    display:flex;
+    justify-content:flex-start;
+    flex-wrap:wrap;
+    width:100%;
+    height:100%;
+}
+.attachments a {
+    display:flex;
+    text-decoration: none;
+    color: white;
+    height: 11vh;
+    width: 7vh;
+    margin:2%;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.attachments b{
+    font-size:2vh;
+}
+.attachments a p{
+    font-size:2.3vh;
+    text-align:center;
+}
+.attachments a p:first-child {
+    display:flex;
+    width:100%;
+    height:80%;
+    border: 2px solid #0460D9;
+    border-radius: 1vh;
+    align-items:center;
+    justify-content:center;
 }

@@ -23,10 +23,11 @@ namespace CRM.Pages
             }
             return new JsonResult(data);
         }
-        public IActionResult OnGetPutData(string name, bool state,string server,string folder,string comment,string password)
+        public IActionResult OnGetPutData(string name, bool state,string server, string address, string folder,string comment,string password)
         {
             receiver.Name = name;
             receiver.Active = state;
+            receiver.MailUsername = address;
             receiver.MailUsername = server;
             receiver.IncommingMessageFolder = folder;
             receiver.Comment = comment;

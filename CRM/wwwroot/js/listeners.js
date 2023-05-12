@@ -14,7 +14,8 @@
                 $(".option_btns button:first").show();
                 $('#name').val(json.Name);
                 $("#dealing").prop("checked", json.Active);
-                $("#server").val(json.MailUsername);
+                $("#address").val(json.MailUsername);
+                $("#server").val(json.Server);
                 $("#selectFolder").val(json.IncommingMessageFolder).trigger('change.select2');;
                 $('textarea').val(json.Comment);
                 $("#token").val(json.UserPassword);
@@ -96,12 +97,13 @@
         var state = $('#dealing').prop('checked');
         var name = $("#name").val();
         var server = $("#server").val();
+        var address = $("#address").val();
         var folder = $("#selectFolder").val();
         var comment = $('textarea').val();
         var token = $("#token").val();
         $.ajax({
             type: "GET",
-            url: "Listeners?handler=PutData&name=" + name + "&state=" + state + "&server=" + server + "&folder=" + folder + "&comment=" + comment + "&password=" + token,
+            url: "Listeners?handler=PutData&name=" + name + "&state=" + state + "&server=" + server + "&adress=" + address + "&folder=" + folder + "&comment=" + comment + "&password=" + token,
             success: function (response) {
                 GetData();
                 $(".item").hide();

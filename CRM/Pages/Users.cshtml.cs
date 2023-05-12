@@ -11,11 +11,12 @@ namespace CRM.Pages
     {
         private static CrmRazorContext db = Manager.db;
         static User user = new User();
-        public List<Role> roles = db.Roles.ToList();
+        public List<Role>? roles;
         static bool is_new = false;
 
         public void OnGet()
         {
+            roles = db.Roles.ToList();
         }
         public IActionResult OnGetGetData()
         {
