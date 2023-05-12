@@ -101,12 +101,11 @@ namespace CRM
                     {
                         foreach (var attachment in item.Attachments.OfType<BodyPartBasic>())
                         {
-                            var part = (MimePart)inbox.GetBodyPart(item.UniqueId, attachment);
+                            var part = (MimePart)inbox.GetBodyPart(item.UniqueId, attachment); //Получаем тело с вложениями
                             var pathDir = Path.Combine(Environment.CurrentDirectory, "wwwroot\\attachments", db.Tickets.ToList().Last().TicketId.ToString());
-                            Console.WriteLine("Current Directory: {0}",pathDir);
                             if (!Directory.Exists(pathDir))
                             {
-                                Directory.CreateDirectory(pathDir);
+                                Directory.CreateDirectory(pathDir); //Создаём директорию под вложения
                             }
 
                             var path = Path.Combine(pathDir, part.FileName);
@@ -114,12 +113,12 @@ namespace CRM
                             {
                                 using (var stream = File.Create(path))
                                 {
-                                    part.Content.DecodeTo(stream);
+                                    part.Content.DecodeTo(stream); //Загружаем вложение в директорию
                                 }
                             }
                             Attachment dbAttachment = new Attachment()
                             {
-                                TicketId = db.Tickets.ToList().Last().TicketId,
+                                TicketId = db.Tickets.ToList().Last().TicketId, //Запихиваем все в таблицу заявок
                                 AttachmentPath = path
                             };
                             db.Attachments.Add(dbAttachment);
