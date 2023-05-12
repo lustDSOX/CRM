@@ -6,6 +6,7 @@ using MailKit.Security;
 using System.Text;
 using Microsoft.AspNetCore.Mvc.Razor.Infrastructure;
 using System.IO.Compression;
+using MimeKit;
 
 namespace CRM
 {
@@ -94,9 +95,37 @@ namespace CRM
                     {
                         ticket.RequesterNavigation = tempReq; //Создание и запись инициатора запроса (от кого письмо)
                     }
-
-                    inbox.AddFlags(item.UniqueId, MessageFlags.Deleted, true); //Удаление письма
                     db.Tickets.Add(ticket);
+                    db.SaveChanges(); //Создали заявку, чтобы можно было на неё ссылаться из Attachments
+                    if (item.Attachments != null && item.Attachments.Count() > 0)
+                    {
+                        foreach (var attachment in item.Attachments.OfType<BodyPartBasic>())
+                        {
+                            var part = (MimePart)inbox.GetBodyPart(item.UniqueId, attachment);
+                            var pathDir = Path.Combine(Environment.CurrentDirectory, "wwwroot\\attachments", db.Tickets.ToList().Last().TicketId.ToString());
+                            Console.WriteLine("Current Directory: {0}",pathDir);
+                            if (!Directory.Exists(pathDir))
+                            {
+                                Directory.CreateDirectory(pathDir);
+                            }
+
+                            var path = Path.Combine(pathDir, part.FileName);
+                            if (!File.Exists(path))
+                            {
+                                using (var stream = File.Create(path))
+                                {
+                                    part.Content.DecodeTo(stream);
+                                }
+                            }
+                            Attachment dbAttachment = new Attachment()
+                            {
+                                TicketId = db.Tickets.ToList().Last().TicketId,
+                                AttachmentPath = path
+                            };
+                            db.Attachments.Add(dbAttachment);
+                        }
+                    }
+                    inbox.AddFlags(item.UniqueId, MessageFlags.Deleted, true); //Удаление письма
                 }
                 inbox.Close();
                 client.Disconnect(true);
