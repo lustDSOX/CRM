@@ -6,10 +6,10 @@ namespace CRM
 {
     public class Search
     {
-        public static List<Ticket> resultList = new List<Ticket>();
         public static CrmRazorContext db = new CrmRazorContext();
         public static List<Ticket> SearchOnTickets(string searchWord)
         {
+            List<Ticket> resultList = new List<Ticket>();
             searchWord = searchWord.ToLower();
             string ticketDescription = "";
             foreach (var ticket in db.Tickets.ToList())
@@ -32,15 +32,9 @@ namespace CRM
                 {
                     string result = Encoding.UTF8.GetString(compressedBytes);
                 }
-                try
+                if (ticket.TicketTitle.ToLower().Contains(searchWord) || ticketDescription.ToLower().Contains(searchWord) || ticket.RequesterNavigation.Email.ToLower().Contains(searchWord))
                 {
-                    if (ticket.TicketTitle.ToLower().Contains(searchWord) || ticketDescription.ToLower().Contains(searchWord) || ticket.RequesterNavigation.Email.ToLower().Contains(searchWord))
-                    {
-                        resultList.Add(ticket);
-                    }
-                }
-                catch (Exception)
-                {
+                    resultList.Add(ticket);
                 }
             }
             return resultList;
