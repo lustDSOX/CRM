@@ -17,6 +17,8 @@ public partial class User
 
     public string Login { get; set; } = null!;
 
+    public bool? Working { get; set; }
+
     public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
     public virtual Role RoleNavigation { get; set; } = null!;

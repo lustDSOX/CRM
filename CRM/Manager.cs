@@ -54,8 +54,7 @@ namespace CRM
         {
             using (var client = new ImapClient())
             {
-                //string connection = "imap." + receiver.MailUsername.Substring(receiver.MailUsername.IndexOf("@") + 1);
-                client.Connect("mail.cit-nnov.ru", 143, false);
+                client.Connect(receiver.MailServer, 143, false);
                 client.Authenticate(receiver.MailUsername, receiver.UserPassword);
                 var inbox = client.GetFolder(receiver.IncommingMessageFolder);
                 inbox.Open(FolderAccess.ReadWrite);

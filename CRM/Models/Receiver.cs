@@ -15,6 +15,8 @@ public partial class Receiver
 
     public string MailUsername { get; set; } = null!;
 
+    public string MailServer { get; set; } = null!;
+
     public string UserPassword { get; set; } = null!;
 
     public string? Comment { get; set; }

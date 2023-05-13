@@ -87,6 +87,10 @@ public partial class CrmRazorContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("incomming_message_folder");
+            entity.Property(e => e.MailServer)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("mail_server");
             entity.Property(e => e.MailUsername)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -173,6 +177,7 @@ public partial class CrmRazorContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("password");
             entity.Property(e => e.Role).HasColumnName("role");
+            entity.Property(e => e.Working).HasColumnName("working");
 
             entity.HasOne(d => d.RoleNavigation).WithMany(p => p.Users)
                 .HasForeignKey(d => d.Role)
