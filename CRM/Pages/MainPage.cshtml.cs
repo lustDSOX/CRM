@@ -1,3 +1,4 @@
+using CRM.Classes;
 using CRM.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

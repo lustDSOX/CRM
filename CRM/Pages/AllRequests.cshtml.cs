@@ -1,3 +1,4 @@
+using CRM.Classes;
 using CRM.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -20,6 +21,28 @@ namespace CRM.Pages
         static string EmailAddress = "uraxara.sox@yandex.ru";
         static string EmailPassword = "hqzdhdeeakjlqzzn";
 
+        public void SaveButton(Ticket ticket)//Получает информацию о выбранной заявке
+        {
+            List<User> selectRespons = new List<User>(); //Список назначенных сотрудников, которых необходимо сохранить
+            if (selectRespons != null)
+            {
+                //Сохранение выбранных отвественных
+                foreach (var user in selectRespons)
+                {
+                    db.UsersForTickets.Add(new UsersForTicket { Ticket = ticket, User = user });
+                }
+                MailSender.SendUserSetOnTicket(ticket);
+            }
+            State selectedState = new State(); // Выбранный статус заявки
+
+            //Сохранение изменений статуса
+            ticket.State = selectedState.StateId;
+            if(ticket.State == 5)
+            {
+                MailSender.SendCompleteTicket(ticket);
+            }
+            db.SaveChanges();
+        }
         public void OnGet(int id)
         {
             states = db.States.ToList();

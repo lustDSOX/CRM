@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Razor.Infrastructure;
 using System.IO.Compression;
 using MimeKit;
 
-namespace CRM
+namespace CRM.Classes
 {
     public class Manager
     {
@@ -72,17 +72,7 @@ namespace CRM
                     Ticket ticket = new Ticket();
                     ticket.TicketTitle = item.NormalizedSubject; //Заголовок письма
 
-                    byte[] tempHtml = Encoding.UTF8.GetBytes(inbox.GetMessage(item.UniqueId).HtmlBody.ToCharArray());
-
-                    using (var output = new MemoryStream())
-                    {
-                        using (var gzip = new GZipStream(output, CompressionMode.Compress))
-                        {
-                            gzip.Write(tempHtml, 0, tempHtml.Length);
-                        }
-                        byte[] compressedBytes = output.ToArray();
-                        ticket.TicketDesciption = compressedBytes; //Сжатое описание письма
-                    }
+                    ticket.TicketDesciption = EncryptDecrypt.Encrypt(inbox.GetMessage(item.UniqueId).HtmlBody); //Сжатое описание письма
 
                     ticket.OpenDate = item.Date.UtcDateTime; //Дата открытия заявки
 
@@ -104,6 +94,7 @@ namespace CRM
                     }
                     db.Tickets.Add(ticket);
                     db.SaveChanges(); //Создали заявку, чтобы можно было на неё ссылаться из Attachments
+
                     if (item.Attachments != null && item.Attachments.Count() > 0)
                     {
                         foreach (var attachment in item.Attachments.OfType<BodyPartBasic>())
@@ -132,6 +123,7 @@ namespace CRM
                         }
                     }
                     inbox.AddFlags(item.UniqueId, MessageFlags.Deleted, true); //Удаление письма
+                    MailSender.SendInitTicket(ticket); //Отправка сообщения о создании заявки инициатору запроса
                 }
                 inbox.Close();
                 client.Disconnect(true);

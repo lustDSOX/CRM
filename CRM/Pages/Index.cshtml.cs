@@ -1,4 +1,5 @@
-﻿using CRM.Models;
+﻿using CRM.Classes;
+using CRM.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -19,7 +20,7 @@ namespace CRM.Pages
         {
             foreach (var user in Users)
             {
-                if (((_email == user.Login) || (_email == user.Name)) && (_password == user.Password))
+                if (((_email == user.Login) || (_email == user.Name)) && (_password == user.Password) && user.Working == true)
                 {
                     return RedirectToPage("/MainPage", new { user_id = user.UserId });
                 }
