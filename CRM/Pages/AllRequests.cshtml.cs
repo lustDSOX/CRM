@@ -34,7 +34,7 @@ namespace CRM.Pages
                         db.SaveChanges();
                     }
                 }
-                MailSender.SendUserSetOnTicket(ticket);
+                MailSender.SendUserSetOnTicketORAddedComment(ticket, true);
             }
 
             //Сохранение изменений статуса
