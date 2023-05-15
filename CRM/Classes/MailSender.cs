@@ -39,13 +39,16 @@ namespace CRM.Classes
                              $"<div>Статус: Новая</div>\n" +
                              $"<div>Назначенные сотрудники: </div>\n" +
                              $"<div>Описание:\n {EncryptDecrypt.Decrypt(ticket.TicketDesciption)}</div>" +
+                             $"<br><br>" +
                              $"<div>Комментарии:</div>\n";
             string usersOnTicket = "";
-            foreach (var user in ticket.UsersForTickets.ToList())
+            foreach (var user in ticket.UsersForTickets.Where(tk => tk.Ticket == ticket).ToList())
             {
-                usersOnTicket += $"{user.User.Name} ";
+                usersOnTicket += $"<div>{user.User.Name}</div>\n";
             }
-            message.Insert(message.LastIndexOf("Назначенные сотрудники: "), usersOnTicket);
+
+            message = message.Insert(message.IndexOf("<div>Назначенные сотрудники:") + 28, usersOnTicket);
+
             foreach (var comment in ticket.Comments.Reverse())
             {
                 message += $"<div>{comment.DateAdded} {comment.CommentAuthorNavigation}: {comment.CommentText}</div>\n";
@@ -55,7 +58,7 @@ namespace CRM.Classes
 
             emailMessage.From.Add(new MailboxAddress("ManDOM", "zni@cit-nnov.ru"));
             emailMessage.To.Add(new MailboxAddress("", ticket.RequesterNavigation.Email));
-            emailMessage.Subject = $"Заявка #{ticket.TicketId} создана";
+            emailMessage.Subject = $"На заявку #{ticket.TicketId} назначены сотрудники";
 
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
             {
