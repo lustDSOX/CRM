@@ -12,10 +12,6 @@ namespace CRM.Pages
         private static List<User> Users = db.Users.ToList();
         public IndexModel() { }
 
-        public void OnGet()
-        {
-            Users = db.Users.ToList();
-        }
         public IActionResult OnPost(string _email, string _password)
         {
             foreach (var user in Users)

@@ -26,17 +26,21 @@ namespace CRM.Pages
             if (selectRespons != null)
             {
                 //Сохранение выбранных отвественных
-                foreach (var user in selectRespons)
+                foreach (var respon in respons)
                 {
-                    db.UsersForTickets.Add(new UsersForTicket { Ticket = ticket, User = user });
+                    if (!(db.UsersForTickets.ToList().Any(user => user.UserId == int.Parse(respon)) &&
+                        db.UsersForTickets.ToList().Any(tk => tk.Ticket == ticket)))
+                    {
+                        db.UsersForTickets.Add(new UsersForTicket { Ticket = ticket, User = db.Users.Where(us => us.UserId == int.Parse(respon)).Single() });
+                        db.SaveChanges();
+                    }
                 }
                 MailSender.SendUserSetOnTicket(ticket);
             }
-            State selectedState = new State(); // Выбранный статус заявки
 
             //Сохранение изменений статуса
-            ticket.State = selectedState.StateId;
-            if(ticket.State == 5)
+            ticket.State = stage;
+            if (ticket.State == 5)
             {
                 MailSender.SendCompleteTicket(ticket);
             }
@@ -129,7 +133,7 @@ namespace CRM.Pages
                 var comments = JsonSerializer.Serialize(data_comm, options);
                 json.Add("comments", comments);
                 var data_attach = db.Attachments
-                    .Where(x=>x.TicketId==id)
+                    .Where(x => x.TicketId == id)
                     .Select(x => x.AttachmentPath)
                     .ToList();
                 var attach = JsonSerializer.Serialize(data_attach, options);
@@ -140,7 +144,7 @@ namespace CRM.Pages
 
         public IActionResult OnGetGetData()
         {
-            var data = db.Tickets.Select(x=>new {x.TicketId,x.StateNavigation,x.TicketTitle}).ToList();
+            var data = db.Tickets.Select(x => new { x.TicketId, x.StateNavigation, x.TicketTitle }).ToList();
             var options = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.IgnoreCycles
