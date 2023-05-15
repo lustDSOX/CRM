@@ -1,6 +1,7 @@
 ﻿using CRM.Models;
 using MailKit.Net.Smtp;
 using MimeKit;
+using System.Diagnostics;
 
 namespace CRM.Classes
 {
@@ -31,16 +32,17 @@ namespace CRM.Classes
             };
             await ConnectAndSendMessage(emailMessage);
         }
-        public static async void SendUserSetOnTicket(Ticket ticket)
+        public static async void SendUserSetOnTicketORAddedComment(Ticket ticket, bool _isCalledFromSave)
         {
+            bool isCalledFromSave = _isCalledFromSave;
             string message = $"<div>Заголовок: {ticket.TicketTitle}</div>\n" +
-                             $"<div>Инициатор запроса: {ticket.RequesterNavigation.Email}</div>\n" +
-                             $"<div>Дата открытия: {ticket.OpenDate}</div>\n" +
-                             $"<div>Статус: Новая</div>\n" +
-                             $"<div>Назначенные сотрудники: </div>\n" +
-                             $"<div>Описание:\n {EncryptDecrypt.Decrypt(ticket.TicketDesciption)}</div>" +
-                             $"<br><br>" +
-                             $"<div>Комментарии:</div>\n";
+                                 $"<div>Инициатор запроса: {ticket.RequesterNavigation.Email}</div>\n" +
+                                 $"<div>Дата открытия: {ticket.OpenDate}</div>\n" +
+                                 $"<div>Статус: Новая</div>\n" +
+                                 $"<div>Назначенные сотрудники: </div>\n" +
+                                 $"<div>Описание:\n {EncryptDecrypt.Decrypt(ticket.TicketDesciption)}</div>" +
+                                 $"<br><br>" +
+                                 $"<div>Комментарии:</div>\n";
             string usersOnTicket = "";
             foreach (var user in ticket.UsersForTickets.Where(tk => tk.Ticket == ticket).ToList())
             {
@@ -58,7 +60,14 @@ namespace CRM.Classes
 
             emailMessage.From.Add(new MailboxAddress("ManDOM", "zni@cit-nnov.ru"));
             emailMessage.To.Add(new MailboxAddress("", ticket.RequesterNavigation.Email));
-            emailMessage.Subject = $"На заявку #{ticket.TicketId} назначены сотрудники";
+            if (isCalledFromSave == true)
+            {
+                emailMessage.Subject = $"На заявку #{ticket.TicketId} назначены сотрудники";
+            }
+            else
+            {
+                emailMessage.Subject = $"К заявке #{ticket.TicketId} добавлен комментарий";
+            }
 
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
             {

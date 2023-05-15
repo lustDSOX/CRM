@@ -27,17 +27,16 @@ namespace CRM.Pages
             if (selectRespons != null)
             {
                 //Сохранение выбранных отвественных
-                //foreach (var respon in respons)
-                //{
-                //    if (!(db.UsersForTickets.ToList().Any(user => user.UserId == int.Parse(respon)) &&
-                //        db.UsersForTickets.ToList().Any(tk => tk.Ticket == ticket)))
-                //    {
-                //        db.UsersForTickets.Add(new UsersForTicket { Ticket = ticket, User = db.Users.Where(us => us.UserId == int.Parse(respon)).Single() });
-                //        db.SaveChanges();
-                //    }
-                //}
-                MailSender.SendUserSetOnTicket(ticket);
-            }
+                foreach (var respon in respons)
+                {
+                    if (!(db.UsersForTickets.ToList().Any(user => user.UserId == int.Parse(respon)) &&
+                        db.UsersForTickets.ToList().Any(tk => tk.Ticket == ticket)))
+                    {
+                        db.UsersForTickets.Add(new UsersForTicket { Ticket = ticket, User = db.Users.Where(us => us.UserId == int.Parse(respon)).Single() });
+                        db.SaveChanges();
+                    }
+                }
+                MailSender.SendUserSetOnTicketORAddedComment(ticket, true);
             }
             //Сохранение изменений статуса
             ticket.State = stage;
