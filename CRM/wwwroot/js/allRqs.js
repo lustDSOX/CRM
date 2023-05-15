@@ -100,8 +100,23 @@ $(document).ready(function () {
         $(".history_block").toggleClass('invisible');
     }
     });
+    $("#add_comm").click( function () {
+        var message = $("#commentRequest").val();
+        console.log(1);
+        $.ajax({
+            type: "POST",
+            url: "AllRequests?handler=PutComment",
+            data: { message: message },
+            success: function (response) {
+               
+            },
+            error: function (xhr, status, error) {
+                console.log('Request failed.  Returned status of ' + xhr.status);
+            }
+        });
+    });
 
-    $('form').on('submit', function (e) {
+    $('#submit').click( function (e) {
         e.preventDefault();
         var stage = $("#selectStage").val();
         var respons = $("#selectRespons").val();
@@ -126,17 +141,5 @@ $(document).ready(function () {
         });
     });
 
-    $(".option_btns button:first").on("click", function () {
-        var message = $("#commentRequest").val();
-            $.ajax({
-                type: "POST",
-                url: "AllRequests?handler=PutComment&message=" + message,
-                success: function (response) {
-                    $("#commentRequest").val("");
-                },
-                error: function (xhr, status, error) {
-                    console.log('Request failed.  Returned status of ' + xhr.status);
-                }
-            });
-    });
+   
 });

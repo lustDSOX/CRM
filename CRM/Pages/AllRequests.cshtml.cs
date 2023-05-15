@@ -21,23 +21,24 @@ namespace CRM.Pages
 
         public IActionResult OnPostPutData(int stage, string respons)//Получает id стадии и назначенных чевовекав
         {
+            if(respons != null) { 
             string[] responsArr = respons.Split(',');
             List<User> selectRespons = new List<User>(); //Список назначенных сотрудников, которых необходимо сохранить
             if (selectRespons != null)
             {
                 //Сохранение выбранных отвественных
-                foreach (var respon in respons)
-                {
-                    if (!(db.UsersForTickets.ToList().Any(user => user.UserId == int.Parse(respon)) &&
-                        db.UsersForTickets.ToList().Any(tk => tk.Ticket == ticket)))
-                    {
-                        db.UsersForTickets.Add(new UsersForTicket { Ticket = ticket, User = db.Users.Where(us => us.UserId == int.Parse(respon)).Single() });
-                        db.SaveChanges();
-                    }
-                }
+                //foreach (var respon in respons)
+                //{
+                //    if (!(db.UsersForTickets.ToList().Any(user => user.UserId == int.Parse(respon)) &&
+                //        db.UsersForTickets.ToList().Any(tk => tk.Ticket == ticket)))
+                //    {
+                //        db.UsersForTickets.Add(new UsersForTicket { Ticket = ticket, User = db.Users.Where(us => us.UserId == int.Parse(respon)).Single() });
+                //        db.SaveChanges();
+                //    }
+                //}
                 MailSender.SendUserSetOnTicket(ticket);
             }
-
+            }
             //Сохранение изменений статуса
             ticket.State = stage;
             if (ticket.State == 5)
@@ -70,13 +71,13 @@ namespace CRM.Pages
         public IActionResult OnPostPutComment(string message)
         {   if (message != null)
             {
-                Comment comment = new Comment();
-                comment.CommentText = message;
-                comment.CommentAuthorNavigation = Manager.currentUser;
-                comment.Ticket = ticket;
-                comment.DateAdded = DateTime.Now;
-                ticket.Comments.Add(comment);
-                db.SaveChanges();
+                    Comment comment = new Comment();
+                    comment.CommentText = message;
+                    comment.CommentAuthorNavigation = Manager.currentUser;
+                    comment.Ticket = ticket;
+                    comment.DateAdded = DateTime.Now;
+                    ticket.Comments.Add(comment);
+                    db.SaveChanges();
             }
             return new OkResult();
         }
