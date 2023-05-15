@@ -26,43 +26,43 @@
                 <button class="add">+</button>
             </ul>
         </div>
-        <div class="item" style="width:75%;">
+        <div class="item @(Model.user==null ? "hide" : "show")">
             <div id="current" style="height:93%;margin-top: 5%;">
                 <form method="post">
                     <ul>
                         <li>
                             <div class="image_container">
                                 <label for="file-input">
-                                    <img>
+                                    <img src="@Model.avatar">
                                 </label>
                                 <input id="file-input" type="file" style="display: none;" name="avatar">
                                 <div>
                                     <p>Имя</p>
-                                    <input type="text" id="name" name="name" required maxlength="50"/>
+                                    <input type="text" id="name" name="name" required maxlength="50" value="@Model.name" />
                                 </div>
                             </div>
                         </li>
                         <li>
                             <p>Логин</p>
-                            <input type="text" id="login" name="login" required maxlength="50"/>
+                            <input type="text" id="login" name="login" required maxlength="50" value="@Model.login" />
                         </li>
                         <li>
                             <p>Пароль</p>
                             <div class="password_div">
-                                <input type="text" id="password" name="password" required maxlength="50"/>
+                                <input type="text" id="password" name="password" required maxlength="50" value="@Model.password" />
                                 <img src="images/eye.svg">
                             </div>
                         </li>
                         <li>
                             <p>Работает</p>
-                            <input type="checkbox" id="working" /><label for="working"></label>
+                            <input type="checkbox" id="working" checked="@Model.work" /><label for="working"></label>
                         </li>
                         <li>
                             <p>Роль</p>
-                            <select id="selectRole">
+                            <select id="selectRole" >
                                 @foreach(Role role in Model.roles)
                                 {
-                                    <option>@role.Name</option>
+                                    <option value="@role.Name" @(role.Name == Model.role_n ? "selected" : "")>@role.Name</option>
                                 }
                             </select>
                         </li>

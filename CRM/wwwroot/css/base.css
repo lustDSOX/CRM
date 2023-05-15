@@ -171,7 +171,13 @@ td{
 
 .item {
     width:75%;
-    display:none;
+}
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
 }
 .add {
     display:block !important;

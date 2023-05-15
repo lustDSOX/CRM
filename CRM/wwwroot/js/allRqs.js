@@ -10,7 +10,7 @@ function SetCurrentData(elem) {
             $("#desciption").html(json.desciption);
             $("#requester").text(json.requester);
             $('#selectStage').val(json.state).trigger('change.select2');
-            $('#selectRespons').val(json.users).trigger('change.select2');
+            $('#selectRespons').val(JSON.parse(json.users)).trigger('change.select2');
             var date = moment(json.last_changed);
             var formattedDate = date.format("DD MMMM YYYY HH:mm");
             $("#last_changed b").text(formattedDate);
@@ -18,6 +18,7 @@ function SetCurrentData(elem) {
             formattedDate = date.format("DD MMMM YYYY HH:mm");
             $("#open_date b").text(formattedDate);
             var attachArray = JSON.parse(json.attach);
+            $(".attachments div").empty();
             attachArray.forEach(function (value) {
                 console.log(value);
                 var link = $('<a></a>').appendTo($(".attachments div"));
@@ -104,7 +105,7 @@ $(document).ready(function () {
         e.preventDefault();
         var stage = $("#selectStage").val();
         var respons = $("#selectRespons").val();
-
+        console.log(typeof respons);
         var formData = new FormData();
         formData.append('stage', stage);
         formData.append('respons', respons);

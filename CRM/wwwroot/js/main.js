@@ -1,10 +1,32 @@
 $(document).ready(function () {
+    $('.settingsButton').click(function () {
+        var id = $('#user_id').text();
+        $(".load").show();
+        if ($(".changed_panel div").children().length != 0) {
+            $(".changed_panel div").empty();
+        }
+        const iframe = $('<iframe/>');
+        iframe.on('load', function () {
+            $(".load").hide();
+        });
+        var src = "Users?id=" + id;
+        console.log(src);
+        iframe.attr({
+            "height": "100%",
+            "width": "100%",
+            "frameborder": "0",
+            "src": src
+        });
+        iframe.height = '100%';
+        iframe.width = '100%';
+        $(iframe).css("border", "none");
+        $(".changed_panel div").append(iframe);
+    });
     var elements = $('.main_block li');
     elements.on('click', function () {
         var index = elements.index(this);
         GetReq(index);
     });
-
 
     function GetReq(i) {
         $(".load").show();
@@ -26,7 +48,7 @@ $(document).ready(function () {
             iframe.attr("src", "AllRequests?id=-1");
             break;
           case 1:
-            iframe.attr("src", "AllRequests?id=-1");
+            iframe.attr("src", "AllRequests?id=" + $('#user_id').text());
             break;
           case 2:
             iframe.attr("src", "Listeners");

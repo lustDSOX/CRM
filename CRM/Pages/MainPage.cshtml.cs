@@ -9,6 +9,7 @@ namespace CRM.Pages
         CrmRazorContext db = Manager.db;
         public string username;
         public string avatar;
+        public int id;
         public MainPageModel()
         {
             Manager.GetTickets1Min();
@@ -18,6 +19,7 @@ namespace CRM.Pages
             Manager.currentUser = db.Users.Find(Int32.Parse(user_id));
             username = Manager.currentUser.Name;
             avatar = Manager.currentUser.AvatarUrl;
+            id = Manager.currentUser.UserId;
         }
     }
 }

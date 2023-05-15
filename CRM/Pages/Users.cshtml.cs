@@ -11,12 +11,28 @@ namespace CRM.Pages
     public class UsersModel : PageModel
     {
         private static CrmRazorContext db = Manager.db;
-        static User user = new User();
+        public User? user;
         public List<Role>? roles;
+        public string avatar;
+        public string name;
+        public string login;
+        public string password;
+        public bool? work;
+        public string role_n;
         static bool is_new = false;
 
-        public void OnGet()
+        public void OnGet(int? id)
         {
+            if (id.HasValue)
+            {
+                user = db.Users.Find(id);
+                avatar = user.AvatarUrl;
+                name = user.Name;
+                login = user.Login;
+                password = user.Password;
+                work = user.Working;
+                role_n = user.RoleNavigation.Name;
+            }
             roles = db.Roles.ToList();
         }
         public IActionResult OnGetGetData()

@@ -17,10 +17,11 @@ namespace CRM.Pages
         public List<Ticket>? tickets { get; set; }
         public List<State>? states { get; set; }
         public List<User>? users { get; set; }
-        Ticket? ticket { get; set; } // выбранна€ за€вка
+        static Ticket? ticket { get; set; } // выбранна€ за€вка
 
-        public IActionResult OnPostPutData(int stage, string[] respons)//ѕолучает id стадии и назначенных чевовекав
+        public IActionResult OnPostPutData(int stage, string respons)//ѕолучает id стадии и назначенных чевовекав
         {
+            string[] responsArr = respons.Split(',');
             List<User> selectRespons = new List<User>(); //—писок назначенных сотрудников, которых необходимо сохранить
             if (selectRespons != null)
             {
@@ -63,14 +64,16 @@ namespace CRM.Pages
         }
 
         public IActionResult OnPostPutComment(string message)
-        {
-            Comment comment = new Comment();
-            comment.CommentText = message;
-            comment.CommentAuthorNavigation = Manager.currentUser;
-            comment.Ticket = ticket;
-            comment.DateAdded = DateTime.Now;
-            ticket.Comments.Add(comment);
-            db.SaveChanges();
+        {   if (message != null)
+            {
+                Comment comment = new Comment();
+                comment.CommentText = message;
+                comment.CommentAuthorNavigation = Manager.currentUser;
+                comment.Ticket = ticket;
+                comment.DateAdded = DateTime.Now;
+                ticket.Comments.Add(comment);
+                db.SaveChanges();
+            }
             return new OkResult();
         }
 
