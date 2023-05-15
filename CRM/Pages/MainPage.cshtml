@@ -25,7 +25,7 @@
         <button class="user_button">
             <p id="user_id" name="user_id" class="invisible">@RouteData.Values["user_id"]</p>
             <p id="user_name" name="user_name">@Model.username</p>
-            <img id="user_img" src="https://avatars.mds.yandex.net/get-yapic/30955/h9ESpYexO4nrHvOZqGg2EYWLhqA-1/islands-retina-small">
+            <img id="user_img" src=@Model.avatar>
         </button>
     </header>
     <div class="main_block">

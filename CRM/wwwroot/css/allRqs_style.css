@@ -16,7 +16,7 @@ h4{
     margin:0 0 2vh 0;
 }
 hr{
-    width:100%;
+    width:95%;
 
 }
 #last_changed{
@@ -40,10 +40,11 @@ button:not(.history_button,.select2-selection__choice__remove):hover {
     overflow-y: scroll;
     margin:0 1vh 0 1vh;
 }
-#currentParameters{
-    width: 28%;
+#currentParameters {
+    width:100%;
+    height:100%;
     padding: 0;
-    position: relative;
+    position:relative;
 }
 
 #currentParameters li >*{
@@ -179,17 +180,18 @@ textarea{
 
 .attachments {
     position: absolute;
-    width: 90%;
+    width: 100%;
     bottom: 1vh;
     left: 0;
     right: 0;
-    height: 20vh;
+    height: 15vh;
     padding: 1%;
 }
 .attachments div{
     display:flex;
     justify-content:flex-start;
     flex-wrap:wrap;
+    overflow-y:scroll;
     width:100%;
     height:100%;
 }
@@ -198,7 +200,6 @@ textarea{
     text-decoration: none;
     color: white;
     height: 11vh;
-    width: 7vh;
     margin:2%;
     flex-direction: column;
     justify-content: space-between;
@@ -213,10 +214,13 @@ textarea{
 }
 .attachments a p:first-child {
     display:flex;
-    width:100%;
+    width:7vh;
     height:80%;
     border: 2px solid #0460D9;
     border-radius: 1vh;
     align-items:center;
     justify-content:center;
+}
+form {
+    width: 28%;
 }

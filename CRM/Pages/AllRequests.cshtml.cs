@@ -17,11 +17,9 @@ namespace CRM.Pages
         public List<Ticket>? tickets { get; set; }
         public List<State>? states { get; set; }
         public List<User>? users { get; set; }
-        Ticket? ticket { get; set; }
-        static string EmailAddress = "uraxara.sox@yandex.ru";
-        static string EmailPassword = "hqzdhdeeakjlqzzn";
+        Ticket? ticket { get; set; } // выбранная заявка
 
-        public void SaveButton(Ticket ticket)//Получает информацию о выбранной заявке
+        public IActionResult OnPostPutData(int stage, string[] respons)//Получает id стадии и назначенных чевовекав
         {
             List<User> selectRespons = new List<User>(); //Список назначенных сотрудников, которых необходимо сохранить
             if (selectRespons != null)
@@ -42,6 +40,7 @@ namespace CRM.Pages
                 MailSender.SendCompleteTicket(ticket);
             }
             db.SaveChanges();
+            return new OkResult();
         }
         public void OnGet(int id)
         {
@@ -80,33 +79,6 @@ namespace CRM.Pages
             return new OkResult();
         }
 
-        public IActionResult OnPostPutData(string state, int[] users)
-        {
-            ticket.StateNavigation = db.States.FirstOrDefault(x => x.Name == state);
-            var currentUsers = db.UsersForTickets.Where(x => x.TicketId == ticket.TicketId).Select(x => x.UserId).ToList();
-            var usersToRemove = currentUsers.Except(users);
-            foreach (var userId in usersToRemove)
-            {
-                var userForTicket = db.UsersForTickets
-                    .SingleOrDefault(uft => uft.TicketId == ticket.TicketId && uft.UserId == userId);
-                if (userForTicket != null)
-                {
-                    db.UsersForTickets.Remove(userForTicket);
-                }
-            }
-            var usersToAdd = users.Except(currentUsers);
-            foreach (var userId in usersToAdd)
-            {
-                var userForTicket = new UsersForTicket();
-                userForTicket.UserId = userId;
-                userForTicket.TicketId = ticket.TicketId;
-                db.UsersForTickets.Add(userForTicket);
-            }
-            db.SaveChanges();
-
-            return new OkResult();
-        }
-
         public IActionResult OnGetSetData(int id)
         {
             JsonObject json = new JsonObject();
@@ -138,22 +110,39 @@ namespace CRM.Pages
                 }
                 string requester = db.Requesters.FirstOrDefault(x => x.ReqId == ticket.Requester).Email;
                 json.Add("requester", requester);
-                string state = db.States.FirstOrDefault(x => x.StateId == ticket.State).Name;
+                int state = db.States.FirstOrDefault(x => x.StateId == ticket.State).StateId;
                 json.Add("state", state);
                 var users_data = db.UsersForTickets
                     .Where(uft => uft.TicketId == id)
-                    .Select(uft => uft.User)
+                    .Select(uft => uft.User.UserId)
                     .ToList();
                 var users = JsonSerializer.Serialize(users_data);
                 json.Add("users", users);
-                var data = db.Comments.Where(x => x.TicketId == id).ToList();
+                var data_comm = db.Comments.Where(x => x.TicketId == id).ToList();
                 var options = new JsonSerializerOptions
                 {
                     ReferenceHandler = ReferenceHandler.IgnoreCycles
                 };
-                var comments = JsonSerializer.Serialize(data, options);
+                var comments = JsonSerializer.Serialize(data_comm, options);
                 json.Add("comments", comments);
+                var data_attach = db.Attachments
+                    .Where(x=>x.TicketId==id)
+                    .Select(x => x.AttachmentPath)
+                    .ToList();
+                var attach = JsonSerializer.Serialize(data_attach, options);
+                json.Add("attach", attach);
             }
+            return new JsonResult(json);
+        }
+
+        public IActionResult OnGetGetData()
+        {
+            var data = db.Tickets.Select(x=>new {x.TicketId,x.StateNavigation,x.TicketTitle}).ToList();
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.IgnoreCycles
+            };
+            var json = JsonSerializer.Serialize(data, options);
             return new JsonResult(json);
         }
     }

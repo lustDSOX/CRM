@@ -33,9 +33,9 @@ namespace CRM.Pages
             receiver.IncommingMessageFolder = folder;
             receiver.Comment = comment;
             receiver.UserPassword = password;
-            //if(is_new)
-            //    db.Receivers.Add(receiver);
-            //db.SaveChanges();
+            if(is_new)
+                db.Receivers.Add(receiver);
+            db.SaveChanges();
             return new OkResult();
         }
 

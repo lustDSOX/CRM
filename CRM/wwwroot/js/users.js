@@ -19,7 +19,7 @@ $(document).ready(function () {
 
 
     function SetCurrentData() {
-        var id = $(this).find('button div').attr("id");
+        var id = $(this).attr("id");
         $.ajax({
             type: "GET",
             url: "Users?handler=SetData&id=" + id,
@@ -32,6 +32,7 @@ $(document).ready(function () {
                 $('#name').val(json.Name);
                 $("#login").val(json.Login);
                 $("#password").val(json.Password);
+                $("#working").prop("checked", json.Working);
                 if (json.Role == 1) {
                     $('#selectRole').val("Администратор").trigger('change.select2');
                 }
@@ -123,10 +124,10 @@ $(document).ready(function () {
                 jsonArray.forEach(function (item) {
                     //console.log(item)
                     if (list.find("#" + item.UserId).length != 0) {
-                        $("#" + item.UserId).siblings().filter("span").text(item.Name);;
+                        var li = $("#" + item.UserId);
                         var role_img = $("#" + item.UserId + " img:last");
                         var avatar = $("#" + item.UserId + " img:first");
-                        var span = $("#" + item.UserId).siblings().filter("span");
+                        var span = $("#" + item.UserId).find("span");
                     }
                     else {
                         var li = $("<li></li>");
@@ -136,18 +137,18 @@ $(document).ready(function () {
                         var role_img = $("<img>")
                         var avatar = $("<img>")
                         var div = $("<div></div>");
+                        var hr = $("<hr/>");   
                         
-                        
-                        div.attr("id", item.UserId);
+                        li.attr("id", item.UserId);
                         div.append(avatar);
                         div.append(role_img);
                         button.append(div);
                         button.append(span);
                         li.append(button);
+                        li.append(hr);
                         list.append(li);
+
                     }
-                    var hr = $("<hr/>");
-                    li.append(hr);
                     avatar.attr("src", item.AvatarUrl);
                     span.text(item.Name);
                     if (item.Role == 1) {
@@ -156,9 +157,12 @@ $(document).ready(function () {
                     else {
                         role_img.attr("src", "images/user.svg");
                     }
-                    //if (item.Working) {
-                    //    li.css('opacity', '0.5');
-                    //}
+                    if (item.Working) {
+                        li.css('opacity', '1');
+                    }
+                    else {
+                        li.css('opacity', '0.5');
+                    }
                 });
             },
             error: function (xhr, status, error) {

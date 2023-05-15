@@ -6,24 +6,18 @@ namespace CRM.Pages
 {
     public class MainPageModel : PageModel
     {
-        static User current_user = null;
-        private static CrmRazorContext db = Manager.db;
-        private static List<User> Users = db.Users.ToList();
+        CrmRazorContext db = Manager.db;
         public string username;
+        public string avatar;
         public MainPageModel()
         {
             Manager.GetTickets1Min();
         }
         public void OnGet(string user_id)
         {
-            //foreach (var user in Users)
-            //{
-            //    if (user.UserId == int.Parse(user_id))
-            //    {
-            //        current_user = user;
-            //        username = user.Name;
-            //    }
-            //}
+            Manager.currentUser = db.Users.Find(Int32.Parse(user_id));
+            username = Manager.currentUser.Name;
+            avatar = Manager.currentUser.AvatarUrl;
         }
     }
 }

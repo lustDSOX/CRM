@@ -11,24 +11,32 @@ namespace CRM.Pages
     public class RequestersModel : PageModel
     {
         CrmRazorContext db = Manager.db;
+        Requester? requester;
         public void OnGet()
         {
         }
         public IActionResult OnGetGetData()
         {
-            List<Receiver> data;
+            List<Requester> data;
             lock (db)
             {
-                data = db.Receivers.ToList();
+                data = db.Requesters.ToList();
             }
             return new JsonResult(data);
         }
 
         public IActionResult OnGetSetData(int id)
         {
-            Requester requester= db.Requesters.FirstOrDefault(x => x.ReqId == id);
+            requester= db.Requesters.FirstOrDefault(x => x.ReqId == id);
             var json = JsonConvert.SerializeObject(requester);
             return new JsonResult(json);
+        }
+
+        public IActionResult OnPostPutData(string number)
+        {
+            requester.PhoneNumber = number;
+            db.SaveChanges();
+            return new OkResult();
         }
     }
 }

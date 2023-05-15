@@ -38,8 +38,9 @@ namespace CRM.Pages
                 user.Name = name;
                 user.Login = login;
                 user.Password = password;
+                user.Working = working;
                 user.Role = db.Roles.FirstOrDefault(x => x.Name == role).RoleId;
-                if (avatar != null)
+                if (avatar != null)  
                 {
                     var fileExtension = Path.GetExtension(avatar.FileName);
                     string avatar_name = "";
@@ -63,7 +64,8 @@ namespace CRM.Pages
                 }
                 else
                 {
-                    user.AvatarUrl = "/images/base_avatar.svg";
+                    if(user.AvatarUrl == null)
+                        user.AvatarUrl = "/images/base_avatar.svg";
                 }
                 if (is_new)
                     db.Users.Update(user);

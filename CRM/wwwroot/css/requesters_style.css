@@ -37,8 +37,11 @@ p{
   font-size: 2vh;
   margin-bottom: 1%;
 }
-#current ul{
-  padding: 0;
+#current{
+    display:none;
+}
+#current ul {
+    padding: 0;
     position: relative;
     width: 80%;
     height: 95%;

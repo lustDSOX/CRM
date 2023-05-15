@@ -25,31 +25,6 @@
         <div style="width:25%;">
             <input type="text" class="search" placeholder="поиск">
             <ul id="ListSubj">
-                @foreach(Ticket ticket in Model.tickets)
-                {
-                    <li onclick="SetCurrentData(this)" id="@ticket.TicketId">
-                        <button>
-                            @ticket.TicketTitle
-                            @foreach(State state in Model.states)
-                            {
-                                if(@state.StateId == @ticket.State)
-                                {
-                                    <table width="100%" class="stage_@state.StateId">
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    </table>
-                                    <p>@state.Name</p>
-                                }
-                            }
-                        </button>
-                        <hr />
-                    </li>
-                }
             </ul>
         </div>
         <div style="width:75%;">
@@ -63,67 +38,64 @@
                         <div id="desciption"></div>
                         <div class="attachments">
                             <p><b>Прикрепленные файлы</b></p>
-                            <hr />
-                            <div>
-                                <a download="name" href="/images/avatars/2.gif">
-                                    <p id="type">JS</p>
-                                    <p id="file_name">base</p>
-                                </a>
-                            </div>
+                            <hr/>
+                            <div></div>
                         </div>
                     </div>
-                    <ul id="currentParameters">
-                        <button class="history_button"></button>
-                        <div class="history_block invisible">
-                            <div class="history">
-                            </div>
-                            <div class="pointer"></div>
-                        </div>
-                        <li>
-                            <p>От:</p>
-                            <p id="requester"></p>
-                        </li>
-                        <li>
-                            <p>стадия</p>
-                            <select id="selectStage">
-                                @foreach (State state in Model.states)
-                                {
-                                    <option>@state.Name</option>
-                                }
-                            </select>
-                        </li>
-                        <li>
-                            <p>ответственные</p>
-                            <select id="selectRespons" multiple="multiple">
-                                @foreach (User user in Model.users)
-                                {
-                                    <option value="@user.UserId">@user.Name</option>
-                                }
-                            </select>
-                        </li>
-                        <li style="height:65%">
-                            <p>комментарии</p>
-                            <div class="commentsHistory">
-                                <div class="RequesterComm">
-                                    <p>Requester</p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco
+                    <form>
+                        <ul id="currentParameters">
+                            <button class="history_button"></button>
+                            <div class="history_block invisible">
+                                <div class="history">
                                 </div>
-                                <div class="UserComm">
-                                    <p>User</p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco
-                                </div>
+                                <div class="pointer"></div>
                             </div>
-                            <textarea id="commentRequest"></textarea>
-                        </li>
-                        <div class="option_btns">
-                            <button>Добавить комментарий</button>
-                            <button type="submit">Сохранить</button>
-                        </div>
-                    </ul>
+                            <li>
+                                <p>От:</p>
+                                <p id="requester"></p>
+                            </li>
+                            <li>
+                                <p>стадия</p>
+                                <select id="selectStage">
+                                    @foreach (State state in Model.states)
+                                    {
+                                        <option value="@state.StateId">@state.Name</option>
+                                    }
+                                </select>
+                            </li>
+                            <li>
+                                <p>ответственные</p>
+                                <select id="selectRespons" multiple="multiple">
+                                    @foreach (User user in Model.users)
+                                    {
+                                        <option value="@user.UserId">@user.Name</option>
+                                    }
+                                </select>
+                            </li>
+                            <li style="height:65%">
+                                <p>комментарии</p>
+                                <div class="commentsHistory">
+                                    <div class="RequesterComm">
+                                        <p>Requester</p>
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                        quis nostrud exercitation ullamco
+                                    </div>
+                                    <div class="UserComm">
+                                        <p>User</p>
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                        quis nostrud exercitation ullamco
+                                    </div>
+                                </div>
+                                <textarea id="commentRequest"></textarea>
+                            </li>
+                            <div class="option_btns">
+                                <button>Добавить комментарий</button>
+                                <button type="submit">Сохранить</button>
+                            </div>
+                        </ul>
+                    </form>
                 </div>
             </div>
         </div>
