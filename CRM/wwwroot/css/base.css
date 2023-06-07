@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap');
+
 ::-webkit-scrollbar {
     width: 0.4vw;
 }
@@ -17,8 +19,13 @@ body {
     height: 100.1vh;
     overflow: hidden;
     color: white;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 400;
 }
 
+button {
+    font-family: 'Montserrat', sans-serif !important;
+}
 h2 {
     color: white;
     font-size: 20px;
@@ -171,6 +178,7 @@ td{
 
 .item {
     width:75%;
+    display:none;
 }
 .show {
     display: block;

@@ -83,10 +83,12 @@ p{
 .fixed_header th, .fixed_header td {
   padding: 5px;
   text-align: left;
-  width: 15vw;
   border: none;
+  cursor:pointer;
 }
-
+.fixed_header th{
+    width:15vw;
+}
 .fixed_header tbody tr{
   display: block;
   border-bottom: 0.1vh solid #0460D9;

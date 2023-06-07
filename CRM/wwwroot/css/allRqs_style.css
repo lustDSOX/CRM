@@ -39,6 +39,7 @@ button:not(.history_button,.select2-selection__choice__remove):hover {
 #desciption {
     overflow-y: scroll;
     margin:0 1vh 0 1vh;
+    height:60vh;
 }
 #currentParameters {
     width:100%;

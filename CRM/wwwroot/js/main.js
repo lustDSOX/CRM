@@ -1,4 +1,29 @@
+function SetRqs(elementId) {
+    $(".load").show();
+    $(".changed_panel div").empty();
+    const iframe = $('<iframe/>');
+    iframe.on('load', function () {
+        $(".load").hide();
+        const iframeWindow = iframe[0].contentWindow;
+        iframeWindow.SetCurrentData(elementId);
+    });
+    var src = "AllRequests?id=-1";
+    iframe.attr({
+        "height": "100%",
+        "width": "100%",
+        "frameborder": "0",
+        "src": src
+    });
+    iframe.height = '100%';
+    iframe.width = '100%';
+    $(iframe).css("border", "none");
+    $(".changed_panel div").append(iframe);
+}
+
 $(document).ready(function () {
+    $('.logout_btn').click(function () {
+        window.location.href = 'https://localhost:7131/';
+    });
     $('.settingsButton').click(function () {
         var id = $('#user_id').text();
         $(".load").show();
@@ -22,6 +47,7 @@ $(document).ready(function () {
         $(iframe).css("border", "none");
         $(".changed_panel div").append(iframe);
     });
+
     var elements = $('.main_block li');
     elements.on('click', function () {
         var index = elements.index(this);

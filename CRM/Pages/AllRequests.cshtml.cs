@@ -21,22 +21,29 @@ namespace CRM.Pages
 
         public IActionResult OnPostPutData(int stage, string respons)//Получает id стадии и назначенных чевовекав
         {
-            if(respons != null) { 
-            string[] responsArr = respons.Split(',');
-            List<User> selectRespons = new List<User>(); //Список назначенных сотрудников, которых необходимо сохранить
-            if (selectRespons != null)
+            if (respons != null)
             {
-                //Сохранение выбранных отвественных
-                foreach (var respon in respons)
+                int[] users_id = respons.Split(',').Select(int.Parse).ToArray();
+
+                // Удаляем лишних работников из заявки
+                var us_del = db.UsersForTickets.Where(u => u.TicketId == ticket.TicketId).ToList();
+                db.UsersForTickets.RemoveRange(us_del);
+                List<UsersForTicket> us_add = new List<UsersForTicket>();
+                foreach (var user in users_id)
                 {
-                    if (!(db.UsersForTickets.ToList().Any(user => user.UserId == int.Parse(respon)) &&
-                        db.UsersForTickets.ToList().Any(tk => tk.Ticket == ticket)))
-                    {
-                        db.UsersForTickets.Add(new UsersForTicket { Ticket = ticket, User = db.Users.Where(us => us.UserId == int.Parse(respon)).Single() });
-                        db.SaveChanges();
-                    }
+                    UsersForTicket uft = new UsersForTicket();
+                    uft.TicketId = ticket.TicketId;
+                    uft.UserId = user;
+                    us_add.Add(uft);
                 }
+                db.UsersForTickets.AddRange(us_add);
+
                 MailSender.SendUserSetOnTicketORAddedComment(ticket, true);
+            }
+            else
+            {
+                var us_del = db.UsersForTickets.Where(u => u.TicketId == ticket.TicketId).ToList();
+                db.UsersForTickets.RemoveRange(us_del);
             }
             //Сохранение изменений статуса
             ticket.State = stage;
@@ -68,15 +75,16 @@ namespace CRM.Pages
         }
 
         public IActionResult OnPostPutComment(string message)
-        {   if (message != null)
+        {
+            if (message != null)
             {
-                    Comment comment = new Comment();
-                    comment.CommentText = message;
-                    comment.CommentAuthorNavigation = Manager.currentUser;
-                    comment.Ticket = ticket;
-                    comment.DateAdded = DateTime.Now;
-                    ticket.Comments.Add(comment);
-                    db.SaveChanges();
+                Comment comment = new Comment();
+                comment.CommentText = message;
+                comment.CommentAuthorNavigation = Manager.currentUser;
+                comment.Ticket = ticket;
+                comment.DateAdded = DateTime.Now;
+                ticket.Comments.Add(comment);
+                db.SaveChanges();
             }
             return new OkResult();
         }
@@ -150,6 +158,7 @@ namespace CRM.Pages
                 ReferenceHandler = ReferenceHandler.IgnoreCycles
             };
             var json = JsonSerializer.Serialize(data, options);
+
             return new JsonResult(json);
         }
     }

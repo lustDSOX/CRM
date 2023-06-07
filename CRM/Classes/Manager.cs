@@ -84,14 +84,19 @@ namespace CRM.Classes
                     temp = temp.Substring(temp.IndexOf('<') + 1);
                     temp = temp.Trim('>');
                     Requester tempReq = new Requester { Email = temp };
-                    if (requesters.Any(req => req.Email == tempReq.Email))
+                    try
                     {
-                        ticket.RequesterNavigation = requesters.Where(tmp1 => tmp1.Email == temp).Single();
+                        if (requesters.Any(req => req.Email == tempReq.Email))
+                        {
+                            ticket.RequesterNavigation = requesters.Where(tmp1 => tmp1.Email == temp).Single();
+                        }
+                        else
+                        {
+                            ticket.RequesterNavigation = tempReq; //Создание и запись инициатора запроса (от кого письмо)
+                        }
                     }
-                    else
-                    {
-                        ticket.RequesterNavigation = tempReq; //Создание и запись инициатора запроса (от кого письмо)
-                    }
+                    catch { break; }
+                    
                     db.Tickets.Add(ticket);
                     db.SaveChanges(); //Создали заявку, чтобы можно было на неё ссылаться из Attachments
 

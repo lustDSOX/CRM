@@ -2,7 +2,6 @@ using CRM.Classes;
 using CRM.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -11,7 +10,7 @@ namespace CRM.Pages
     public class UsersModel : PageModel
     {
         private static CrmRazorContext db = Manager.db;
-        public User? user;
+        static User? user;
         public List<Role>? roles;
         public string avatar;
         public string name;
@@ -31,7 +30,7 @@ namespace CRM.Pages
                 login = user.Login;
                 password = user.Password;
                 work = user.Working;
-                role_n = user.RoleNavigation.Name;
+                role_n = db.Roles.Find(user.Role).Name;
             }
             roles = db.Roles.ToList();
         }
@@ -47,7 +46,7 @@ namespace CRM.Pages
         }
 
 
-        public IActionResult OnPostPutData(string name,string login,string password, string role,IFormFile avatar,bool working)
+        public IActionResult OnPostPutData(string name, string login, string password, string role, IFormFile avatar, bool working)
         {
             lock (user)
             {
@@ -56,7 +55,7 @@ namespace CRM.Pages
                 user.Password = password;
                 user.Working = working;
                 user.Role = db.Roles.FirstOrDefault(x => x.Name == role).RoleId;
-                if (avatar != null)  
+                if (avatar != null)
                 {
                     var fileExtension = Path.GetExtension(avatar.FileName);
                     string avatar_name = "";
@@ -80,7 +79,7 @@ namespace CRM.Pages
                 }
                 else
                 {
-                    if(user.AvatarUrl == null)
+                    if (user.AvatarUrl == null)
                         user.AvatarUrl = "/images/base_avatar.svg";
                 }
                 if (is_new)
@@ -104,17 +103,14 @@ namespace CRM.Pages
 
         public IActionResult OnGetSetData(int id)
         {
-            lock (user)
+            if (id == -1)
             {
-                if (id == -1)
-                {
-                    user = new User();
-                    is_new = true;
-                    return StatusCode(StatusCodes.Status204NoContent);
-                }
-                is_new = false;
-                user = db.Users.FirstOrDefault(x => x.UserId == id);
+                user = new User();
+                is_new = true;
+                return StatusCode(StatusCodes.Status204NoContent);
             }
+            is_new = false;
+            user = db.Users.FirstOrDefault(x => x.UserId == id);
             var options = new JsonSerializerOptions
             {
                 ReferenceHandler = ReferenceHandler.IgnoreCycles

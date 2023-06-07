@@ -1,5 +1,5 @@
-function SetCurrentData(elem) {
-    var id = $(elem).attr("id");
+function SetCurrentData(id) {
+    console.log(id);
     $.ajax({
         type: "GET",
         url: "AllRequests?handler=SetData&id=" + id,
@@ -39,7 +39,6 @@ function SetCurrentData(elem) {
 
 $(document).ready(function () {
     GetData();
-
     function GetData() {
         $.ajax({
             type: "GET",
@@ -48,39 +47,30 @@ $(document).ready(function () {
             success: function (response) {
                 var jsonArray = JSON.parse(response);
                 var list = $("#ListSubj");
+                list.empty();
                 jsonArray.forEach(function (item) {
-                    if (list.find("#" + item.TicketId).length != 0) {
-                        var li = list.find("#" + item.TicketId);
-                        var table = li.find('table');
-                        var button = li.find('button');
-                        var p = li.find('p');
-                        table.attr('class', "stage_" + item.StateNavigation.StateId);
-                        button.text(item.TicketTitle);
-                        p.text(item.StateNavigation.Name);
-                    }
-                    else {
                         var li = $('<li></li>');
-                        li.on('click', SetCurrentData.bind(this, li));
-                        li.attr('id', item.TicketId );
+                        li.on('click', function () {
+                            SetCurrentData(item.TicketId);
+                        });
                         var button = $('<button></button>');
+                        button.text(item.TicketTitle);
                         var table = $('<table></table>');
                         table.attr('width', '100%');
+                        table.attr('class', "stage_" + item.StateNavigation.StateId);
                         var tr = $('<tr></tr>');
+                        var p = $('<p></p>');
+                        p.text(item.StateNavigation.Name);
                         for (var i = 0; i < 5; i++) {
                             var td = $('<td></td>');
                             tr.append(td);
-                        }
+                        }        
                         table.append(tr);
-                        var p = $('<p></p>');
-                        table.attr('class', "stage_" + item.StateNavigation.StateId);
-                        button.text(item.TicketTitle);
-                        p.text(item.StateNavigation.Name);
                         button.append(table);
                         button.append(p);
                         li.append(button);
                         li.append('<hr />');
                         list.append(li);
-                    }
                 });
             },
             error: function (xhr, status, error) {
@@ -132,6 +122,7 @@ $(document).ready(function () {
             processData: false,
             contentType: false,
             success: function (response) {
+                SetCurrentData()
                 GetData();
                 $(".item").hide();
             },
