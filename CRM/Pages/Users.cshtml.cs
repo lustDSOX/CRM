@@ -89,17 +89,6 @@ namespace CRM.Pages
             return new OkResult();
         }
 
-        public IActionResult OnGetDeleteData()
-        {
-            lock (user)
-            {
-                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", user.AvatarUrl);
-                System.IO.File.Delete(path);
-                db.Users.Remove(user);
-                db.SaveChanges();
-            }
-            return new OkResult();
-        }
 
         public IActionResult OnGetSetData(int id)
         {

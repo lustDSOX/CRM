@@ -2,8 +2,9 @@ $(document).ready(function () {
     GetData();
 
     const image = $('label img');
-
-    $('input[type="file"]').on('change', (event) => {
+    
+    function handleFileChange(event) {
+        event.preventDefault();
         const file = event.target.files[0];
         if (!file.type.match('image.*')) {
             alert('Выбранный файл не является изображением');
@@ -12,11 +13,14 @@ $(document).ready(function () {
         const filePath = URL.createObjectURL(file);
         const reader = new FileReader();
         reader.addEventListener('load', (event) => {
-            image.attr('src',event.target.result);
+            image.attr('src', event.target.result);
         });
         reader.readAsDataURL(file);
-    });
-
+    }
+    function nonEvent(event) {
+        event.preventDefault();
+    }
+    $('input[type="file"]').on('change', handleFileChange);
 
     function SetCurrentData() {
         var id = $(this).attr("id");
@@ -32,6 +36,36 @@ $(document).ready(function () {
                 $('#name').val(json.Name);
                 $("#login").val(json.Login);
                 $("#password").val(json.Password);
+                var cur_usrId = parseInt(parent.$("#user_id").text());
+                $.ajax({
+                    type: "GET",
+                    url: "Users?handler=SetData&id=" + cur_usrId,
+                    dataType: 'json',
+                    success: function (response) {
+                        var cur_user = JSON.parse(response);
+                        if (cur_user.RoleNavigation.Name != "Администратор" && json.UserId != cur_usrId) {
+                            $(".password_div img").hide();
+                            $("#login").prop('readonly', true);
+                            $("#name").prop('readonly', true);
+                            $("#login").attr('type', "password");
+                            $(".password_div input").prop('readonly', true);
+                            $('input[type="file"]').prop('disabled', true);
+                            $('button[type="submit"').hide();
+                        }
+                        else {
+                            $(".password_div img").show();
+                            $("#login").prop('readonly', false);
+                            $("#name").prop('readonly', false);
+                            $("#login").attr('type', "text");
+                            $(".password_div input").prop('readonly', false);
+                            $('input[type="file"]').prop('disabled', false);
+                            $('button[type="submit"').show();
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.log('Request failed.  Returned status of ' + xhr.status);
+                    }
+                });
                 $("#working").prop("checked", json.Working);
                 if (json.Role == 1) {
                     $('#selectRole').val("Администратор").trigger('change.select2');
@@ -57,7 +91,6 @@ $(document).ready(function () {
                 $('input').val('');
                 $(".item").show();
                 image.attr('src', "/images/base_avatar.svg");
-                $(".option_btns button:first").hide();
             }
             else {
                 console.log('Request failed.  Returned status of ' + xhr.status);
@@ -90,27 +123,12 @@ $(document).ready(function () {
             success: function (response) {
                 GetData();
                 $(".item").hide();
+                parent.UpdateUser();
             },
             error: function (xhr, status, error) {
                 console.log('Request failed.  Returned status of ' + xhr.status);
             }
         });
-    });
-
-    $(".option_btns button:first").on("click", function () {
-        if (window.confirm("Вы уверены, что хотите удалить этот элемент?")) {
-            $.ajax({
-                type: "GET",
-                url: "Users?handler=DeleteData",
-                success: function (response) {
-                    GetData();
-                    $(".item").hide();
-                },
-                error: function (xhr, status, error) {
-                    console.log('Request failed.  Returned status of ' + xhr.status);
-                }
-            });
-        }
     });
 
     function GetData() {

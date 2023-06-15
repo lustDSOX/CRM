@@ -20,6 +20,25 @@ function SetRqs(elementId) {
     $(".changed_panel div").append(iframe);
 }
 
+function UpdateUser() {
+    var id = $("#user_id").text();
+    $.ajax({
+        type: "GET",
+        url: "MainPage?handler=User&id=" + id,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            var json = JSON.parse(response);
+            console.log(json);
+            $("#user_name").text(json.Name);
+            $("#user_img").attr("src", json.AvatarUrl);
+        },
+        error: function (xhr, status, error) {
+            console.log('Request failed.  Returned status of ' + xhr.status);
+        }
+    });
+}
+
 $(document).ready(function () {
     $('.logout_btn').click(function () {
         window.location.href = 'https://localhost:7131/';
@@ -46,6 +65,7 @@ $(document).ready(function () {
         iframe.width = '100%';
         $(iframe).css("border", "none");
         $(".changed_panel div").append(iframe);
+        $(".user_panel").toggleClass('invisible');
     });
 
     var elements = $('.main_block li');

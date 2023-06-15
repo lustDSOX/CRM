@@ -85,10 +85,11 @@ p{
   text-align: left;
   border: none;
   cursor:pointer;
+  width: 13vw !important;
+  max-width: 13vw;
+  min-width: 13vw;
 }
-.fixed_header th{
-    width:15vw;
-}
+
 .fixed_header tbody tr{
   display: block;
   border-bottom: 0.1vh solid #0460D9;

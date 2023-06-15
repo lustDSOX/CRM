@@ -38,7 +38,8 @@ function SetCurrentData(id) {
 }
 
 $(document).ready(function () {
-    GetData();
+    setInterval(GetData(), 60000); // 60000 миллисекунд = 1 минута
+
     function GetData() {
         $.ajax({
             type: "GET",
@@ -49,7 +50,7 @@ $(document).ready(function () {
                 var list = $("#ListSubj");
                 list.empty();
                 jsonArray.forEach(function (item) {
-                        var li = $('<li></li>');
+                    var li = $('<li></li>');
                         li.on('click', function () {
                             SetCurrentData(item.TicketId);
                         });
@@ -80,8 +81,21 @@ $(document).ready(function () {
     };
 
     moment.locale('ru');
-    $( ".history_button" ).click(function() {
+    $(".history_button").click(function () {
+        event.preventDefault(); 
         $(".history_block").toggleClass('invisible');
+        $.ajax({
+            type: "GET",
+            url: "AllRequests?handler=GetHistory",
+            dataType: 'text',
+            success: function (response) {
+                console.log(response);
+                $(".history").html(response);
+            },
+            error: function (xhr, status, error) {
+                console.log('Request failed.  Returned status of ' + xhr.status);
+            }
+        });
     });
 
     $(document).mouseup(function (e) {
@@ -90,20 +104,27 @@ $(document).ready(function () {
         $(".history_block").toggleClass('invisible');
     }
     });
-    $("#add_comm").click( function () {
+    $("#add_comm").click(function () {
+        event.preventDefault(); 
         var message = $("#commentRequest").val();
-        console.log(1);
-        $.ajax({
-            type: "POST",
-            url: "AllRequests?handler=PutComment",
-            data: { message: message },
-            success: function (response) {
+        var div = $("<div></div>");
+        div.attr("class", "UserComm");
+        var user = window.parent.$("#user_name").text();
+        div.append("<p>" + user + "</p>" + message);
+        $("#commentRequest").val("");
+        $(".commentsHistory").append(div);
+        //console.log(1);
+        //$.ajax({
+        //    type: "POST",
+        //    url: "AllRequests?handler=PutComment",
+        //    data: { message: message },
+        //    success: function (response) {
                
-            },
-            error: function (xhr, status, error) {
-                console.log('Request failed.  Returned status of ' + xhr.status);
-            }
-        });
+        //    },
+        //    error: function (xhr, status, error) {
+        //        console.log('Request failed.  Returned status of ' + xhr.status);
+        //    }
+        //});
     });
 
     $('#submit').click( function (e) {
@@ -122,7 +143,6 @@ $(document).ready(function () {
             processData: false,
             contentType: false,
             success: function (response) {
-                SetCurrentData()
                 GetData();
                 $(".item").hide();
             },

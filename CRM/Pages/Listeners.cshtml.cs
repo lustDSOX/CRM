@@ -14,7 +14,6 @@ namespace CRM.Pages
         public void OnGet()
         {
         }
-
         public IActionResult OnGetGetData()
         {
             List<Receiver> data;
@@ -54,7 +53,7 @@ namespace CRM.Pages
                 return StatusCode(StatusCodes.Status204NoContent);
             }
             is_new = false;
-            receiver = db.Receivers.FirstOrDefault(x => x.ReceiverId == id);
+            receiver = db.Receivers.Find(id);
             var json = JsonConvert.SerializeObject(receiver);
             return new JsonResult(json);
         }

@@ -15,7 +15,7 @@
                 $('#name').val(json.Name);
                 $("#dealing").prop("checked", json.Active);
                 $("#address").val(json.MailUsername);
-                $("#server").val(json.Server);
+                $("#server").val(json.MailServer);
                 $("#selectFolder").val(json.IncommingMessageFolder).trigger('change.select2');;
                 $('textarea').val(json.Comment);
                 $("#token").val(json.UserPassword);
@@ -65,13 +65,15 @@
                         var span = $("<span></span>");
                         var div = $("<div></div>");
                         div.attr("id", item.receiverId);
+                        var hr = $("<hr/>");
+                        li.append(hr);
                         button.append(span);
                         button.append(div);
                         li.append(button);
                         list.append(li);
+                        
                     }
-                    var hr = $("<hr/>");
-                    li.append(hr);
+
                     if (item.name == null) {
                         span.text(item.mailUsername);
                     }
@@ -115,6 +117,7 @@
     });
 
     $(".option_btns button:first").on("click", function () {
+        event.preventDefault();
         if (window.confirm("Вы уверены, что хотите удалить этот элемент?")) {
             $.ajax({
                 type: "GET",
