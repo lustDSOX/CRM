@@ -20,6 +20,23 @@ function SetRqs(elementId) {
     $(".changed_panel div").append(iframe);
 }
 
+function GetStat() {
+    $.ajax({
+        type: "GET",
+        url: "MainPage?handler=Stat",
+        dataType: 'json',
+        success: function (response) {
+            console.log(response);
+            $("._new p").text(response.new);
+            $("._closed p").text(response.closed);
+            $("._working p").text(response.working);
+        },
+        error: function (xhr, status, error) {
+            console.log('Request failed.  Returned status of ' + xhr.status);
+        }
+    });
+}
+
 function UpdateUser() {
     var id = $("#user_id").text();
     $.ajax({
@@ -40,6 +57,9 @@ function UpdateUser() {
 }
 
 $(document).ready(function () {
+    GetStat();
+    setInterval(GetStat, 10000); // 60000 миллисекунд = 1 минута
+
     $('.logout_btn').click(function () {
         window.location.href = 'https://localhost:7131/';
     });

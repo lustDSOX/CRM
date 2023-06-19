@@ -134,3 +134,39 @@ header div{
 .settings_btn:hover{
     background: #0460D9;
 }
+.statistics {
+    position: relative;
+    width: 40%;
+}
+
+.statistics div {
+    padding: 0 1%;
+    border-radius: 0.5vh;
+    width: 23%;
+    height: 100%;
+}
+
+.statistics div span {
+    font-size: 1.5vh;
+}
+
+.statistics div p {
+    font-size: 3.5vh;
+    width: 50%;
+    text-align:center;
+}
+
+._new {
+    background: #d1f2a7;
+    color: #73b210;
+}
+
+._closed {
+    background: #c8dbe4;
+    color: #4a7994;
+}
+
+._working {
+    color: #c83134;
+    background: #f2d0d1;
+}

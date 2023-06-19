@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Text.Json.Nodes;
 
 namespace CRM.Pages
 {
@@ -39,6 +40,23 @@ namespace CRM.Pages
                 avatar = Manager.currentUser.AvatarUrl;
                 id = Manager.currentUser.UserId;
             }
+        }
+
+        public IActionResult OnGetStat()
+        {
+            JsonObject json = new JsonObject();
+            using(var db = new CrmRazorContext())
+            {
+                int _new = db.Tickets.Where(x=>x.OpenDate.Date == DateTime.Now.Date).Count();
+                int _closed = db.Tickets.Where(x => x.LastChanged.Date == DateTime.Now.Date && x.StateNavigation.Name == "закрыта").Count();
+                int _working = db.Tickets.Where(x => x.StateNavigation.Name != "закрыта").Count();
+
+                json.Add("new", _new);
+                json.Add("closed", _closed);
+                json.Add("working", _working);
+            }
+
+            return new JsonResult(json);
         }
     }
 }
